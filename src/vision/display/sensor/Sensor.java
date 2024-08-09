@@ -1,4 +1,4 @@
-package vision.display;
+package vision.display.sensor;
 
 public interface Sensor<T> {
 	

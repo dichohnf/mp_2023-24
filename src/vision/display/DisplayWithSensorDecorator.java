@@ -1,34 +1,76 @@
 package vision.display;
 
-import java.util.Collection;
 import java.util.Objects;
 
+import vision.display.sensor.Sensor;
 import vision.display.video_interface.VideoInterface;
+import vision.exception.AbsentVideoInterfaceException;
+import vision.exception.PoorlyDefinedMeasureException;
 
-public final class DisplayWithSensorDecorator<T> extends Display{
+public abstract class DisplayWithSensorDecorator<T> implements Display{
 
 	private final Sensor<T> sensor;
+	private final Display component;
 	
-	public DisplayWithSensorDecorator(int xPixels, int yPixels, int colorBits, ComunicationChannel channel,
-			Collection<VideoInterface> availableInterfaces, Collection<VideoInterface> connectedInterfaces, Sensor<T> sensor) {
-		super(xPixels, yPixels, colorBits, channel, availableInterfaces, connectedInterfaces);
+	protected DisplayWithSensorDecorator(Sensor<T> sensor, Display component) {
 		this.sensor = Objects.requireNonNull(
 				sensor, 
 				"Null sensor argument");
+		this.component = Objects.requireNonNull(
+				component, 
+				"Null cmponent argument");
 	}
 	
 	@Override
-	public void displayMenu() {
-		T measure = sensor.getMeasure();
-		
-		
+	public final void setBrightness(double newBrightness) {
+		component.setBrightness(newBrightness);
 	}
+	
 	@Override
-	public void displayTestScreen() {
-		// TODO Auto-generated method stub
-		
+	public final void setColorTemperature(int newTemperature) {
+		component.setColorTemperature(newTemperature);
 	}
 	
-	
+	@Override
+	public final boolean connectInterface(VideoInterface videoInterface) throws AbsentVideoInterfaceException {
+		return component.connectInterface(videoInterface);
+	}
 
+	@Override
+	public final boolean disconnectInterface(VideoInterface videoInterface) {
+		return component.disconnectInterface(videoInterface);
+	}
+	
+	@Override
+	public final void selectInputInterface(VideoInterface videoIterface) {
+		component.selectInputInterface(videoIterface);
+	}
+	
+	@Override
+	public final void displayMenu() {
+		try {
+			setBestConfiguration();
+		} catch (PoorlyDefinedMeasureException e) {
+			e.printStackTrace();
+		}
+		component.displayMenu();
+	}
+	
+	@Override
+	public void displayInputError(String message) {
+		try {
+			setBestConfiguration();
+		} catch (PoorlyDefinedMeasureException e) {
+			e.printStackTrace();
+		}
+		component.displayInputError(message);
+	}
+	
+	public void setBestConfiguration() throws PoorlyDefinedMeasureException {
+		setValue(sensor.getMeasure());
+	}
+
+	protected abstract void setValue(T measure) throws PoorlyDefinedMeasureException;
+
+	
 }
