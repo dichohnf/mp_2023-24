@@ -1,9 +1,11 @@
 package vision.display;
 
+import java.util.List;
 import java.util.Objects;
 
+import vision.display.interfaces.video.VideoInterface;
+import vision.display.mulfunction.MulfunctionChecker;
 import vision.display.sensor.Sensor;
-import vision.display.video_interface.VideoInterface;
 import vision.exception.AbsentVideoInterfaceException;
 import vision.exception.PoorlyDefinedMeasureException;
 
@@ -22,13 +24,49 @@ public abstract class DisplayWithSensorDecorator<T> implements Display{
 	}
 	
 	@Override
+	public void displayStream() {
+		setBestConfiguration();
+		component.displayStream();
+	}
+	
+	@Override
+	public final void displayMenu() {
+		setBestConfiguration();
+		component.displayMenu();
+	}
+	
+	@Override
+	public void displayError(String message) {
+		setBestConfiguration();
+		component.displayError(message);
+	}
+	
+	@Override
 	public final void setBrightness(double newBrightness) {
 		component.setBrightness(newBrightness);
 	}
 	
 	@Override
+	public double getBrightness() {
+		return component.getBrightness();
+	}
+		
+	@Override
 	public final void setColorTemperature(int newTemperature) {
 		component.setColorTemperature(newTemperature);
+	}
+	
+	@Override
+	public int getColorTemperature() {
+		return component.getColorTemperature();
+	}
+	
+	public void setResolution(String resolution) {
+		component.setResolution(resolution);
+	}
+	
+	public String getResolution() {
+		return component.getResolution();
 	}
 	
 	@Override
@@ -41,36 +79,33 @@ public abstract class DisplayWithSensorDecorator<T> implements Display{
 		return component.disconnectInterface(videoInterface);
 	}
 	
+	public List<VideoInterface> getConnectedInterfaces(){
+		return component.getConnectedInterfaces();
+	}
+	
 	@Override
 	public final void selectInputInterface(VideoInterface videoIterface) {
 		component.selectInputInterface(videoIterface);
 	}
 	
 	@Override
-	public final void displayMenu() {
-		try {
-			setBestConfiguration();
-		} catch (PoorlyDefinedMeasureException e) {
-			e.printStackTrace();
-		}
-		component.displayMenu();
+	public VideoInterface getSelectedInputInterface() {
+		return component.getSelectedInputInterface();
 	}
 	
 	@Override
-	public void displayInputError(String message) {
+	public String mulfunctionTest(MulfunctionChecker checker) {
+		return component.mulfunctionTest(checker);
+	}
+	
+	public void setBestConfiguration() {
 		try {
-			setBestConfiguration();
+			setValue(sensor.getMeasure());
 		} catch (PoorlyDefinedMeasureException e) {
 			e.printStackTrace();
 		}
-		component.displayInputError(message);
-	}
-	
-	public void setBestConfiguration() throws PoorlyDefinedMeasureException {
-		setValue(sensor.getMeasure());
 	}
 
 	protected abstract void setValue(T measure) throws PoorlyDefinedMeasureException;
-
 	
 }

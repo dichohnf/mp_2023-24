@@ -10,10 +10,12 @@ public final class DisplayWithBrightnessSensorDecorator extends DisplayWithSenso
 	private static final Double DEFAULT_SATURATION_LUX = Double.valueOf(10000);
 	private final Double saturationLuxAmount;
 
-	protected DisplayWithBrightnessSensorDecorator(
+	public DisplayWithBrightnessSensorDecorator(
 			Sensor<Double> sensor, Display component, Double saturationLuxAmount) {
 		super(sensor, component);
-		this.saturationLuxAmount =Objects.requireNonNullElse(
+		if(saturationLuxAmount < 0)
+			throw new IllegalArgumentException("Negative saturation argument");
+		this.saturationLuxAmount = Objects.requireNonNullElse(
 				saturationLuxAmount, 
 				DEFAULT_SATURATION_LUX);
 	}

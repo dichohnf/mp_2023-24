@@ -5,16 +5,16 @@ import java.time.LocalTime;
 import vision.display.sensor.Sensor;
 import vision.exception.PoorlyDefinedMeasureException;
 
-public final class DisplayWithClockDecorator extends DisplayWithSensorDecorator<Integer> {
+public final class DisplayWithClockDecorator extends DisplayWithSensorDecorator<LocalTime> {
 
-	public DisplayWithClockDecorator(Sensor<Integer> sensor, Display component) {
+	public DisplayWithClockDecorator(Sensor<LocalTime> sensor, Display component) {
 		super(sensor, component);
 	}
 
 	@Override
-	public void setValue(Integer measure) throws PoorlyDefinedMeasureException {
-		if(LocalTime.now().isBefore(LocalTime.of(07, 00)) 
-		|| LocalTime.now().isAfter(LocalTime.of(22, 00)))
+	public void setValue(LocalTime measure) throws PoorlyDefinedMeasureException {
+		if(measure.isBefore(LocalTime.of(07, 00)) 
+		|| measure.isAfter(LocalTime.of(22, 00)))
 			setNightColor();
 	}
 
