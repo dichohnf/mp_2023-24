@@ -1,0 +1,2 @@
+Creare classe Resolution per gestire comodamente la composizione in ComposedStream (ricordarsi di modificare anche StandardDisplay!!)
+In ComposedStream, nel metodo getEncoded, occorre trovare il primo child da codificare e comporlo agli altri. Per far ciò conviene probbilmente modificare ratio in resolution, così che possa essere calcolata la composizione dello schermo composto. Infine conviene probabilmente impedire che due Stream si accavallino.

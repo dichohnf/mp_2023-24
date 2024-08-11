@@ -3,7 +3,7 @@ package vision.display.interfaces.video;
 import java.util.Objects;
 
 import vision.ComunicationChannel;
-import vision.StreamType;
+import vision.stream.StreamType;
 
 public final class VideoInterface {
 	
