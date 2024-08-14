@@ -2,56 +2,37 @@ package vision.stream;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
-public final class ComposedStream implements StreamType {
+public final class ComposedStream implements VideoStream {
 	
-	private final class Position {
-		int x;
-		int y;
-		
-		Position(int x ,int y) {
-			this.x = x;
-			this.y = y;
-		}		
-	}
-	
-	private final Map<StreamType, Position> children;
+	private final Map<VideoStream, Position> children;
+	private int nextFrame;
 
 	public ComposedStream() {
-		this.children = new HashMap<>();
-	}
-
-	@Override
-	public EncodedStream getEncoded(StreamEncoder encoder) {
-		EncodedStream result = EncodedStream.EMPTY;
-		for (Entry<StreamType, Position> child : children.entrySet()) {
-			result.compose(
-					child.getKey().getEncoded(encoder), 
-					child.getValue().x,
-					child.getValue().y);
-		}
-		return result;
-		
-//		children.entrySet().stream()
-//			.map(entry -> entry.getKey().getEncoded(encoder))
-//			.reduce(null);
-			
-		
-//		children.forEach(
-//				(stream,pos)-> encoder.addStream(
-//						stream.getEncoded(encoder), 
-//						pos.x, 
-//						pos.y));
-//		return encoder.encodedComposition();
+		children = new HashMap<>();
+		nextFrame = 0;
 	}
 	
-	public void add(StreamType child, int x, int y) {
+	public void add(VideoStream child, int x, int y) {
 		 children.put(child, new Position(x, y));
 	}
 	
-	public void remove(StreamType child) {
+	public void remove(VideoStream child) {
 		children.remove(child);
 	}
+
+//	@Override
+//	public VideoFrame nextFrame() throws AbsentFrameException {
+//		int minX = children.values().stream().map(pos -> pos.x).min((x1, x2) -> (x1 < x2)?x1:x2).orElseThrow();
+//		int minY = children.values().stream().map(pos -> pos.y).min((y1, y2) -> (y1 < y2)?y1:y2).orElseThrow();
+//		int maxX = children.values().stream().map(pos -> pos.x).min((x1, x2) -> (x1 > x2)?x1:x2).orElseThrow();
+//		int maxY = children.values().stream().map(pos -> pos.y).min((y1, y2) -> (y1 > y2)?y1:y2).orElseThrow();
+//		String resolution = String.format("%dx%d", maxX - minX, maxY, minY);
+//		return Video
+//		
+//	}
+	
+	
+	
 	
 }

@@ -57,7 +57,7 @@ public final class DisplayBuilder {
 		clockSensor = sensor;
 	}
 	
-	public Display build() throws AbsentVideoInterfaceException {
+	public DisplayProjector build() throws AbsentVideoInterfaceException {
 		Display result = new StandardDisplay(maxNits, supportedResolutions, channel, supportedInterfaces, null);
 		if(brightnessSensor != null)
 			result = new DisplayWithBrightnessSensorDecorator(brightnessSensor, result, saturation);

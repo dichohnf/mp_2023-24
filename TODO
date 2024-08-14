@@ -1,2 +1,2 @@
-Creare classe Resolution per gestire comodamente la composizione in ComposedStream (ricordarsi di modificare anche StandardDisplay!!)
-In ComposedStream, nel metodo getEncoded, occorre trovare il primo child da codificare e comporlo agli altri. Per far ciò conviene probbilmente modificare ratio in resolution, così che possa essere calcolata la composizione dello schermo composto. Infine conviene probabilmente impedire che due Stream si accavallino.
+In VideoFrame si deve gestire l'inerimento delle posizione di origine. In composed si può creare un nuovo frame con x e y minimi come origine e massimi come opposto, e inserire i videoframe con le posizioni modificate. Si può chiamare nextFrame() del figlio ???
+

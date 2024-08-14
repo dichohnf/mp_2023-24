@@ -6,13 +6,7 @@ import vision.display.interfaces.video.VideoInterface;
 import vision.display.mulfunction.MulfunctionChecker;
 import vision.exception.AbsentVideoInterfaceException;
 
-public interface Display {
-	
-	void displayStream();
-	
-	void displayMenu();
-	
-	void displayError(String message);
+public interface Display extends DisplayProjector {
 	
 	void setBrightness(double newBrightness);
 	
