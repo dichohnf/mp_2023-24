@@ -3,7 +3,7 @@ package vision.display.interfaces.video;
 import java.util.Objects;
 
 import vision.ComunicationChannel;
-import vision.stream.StreamType;
+import vision.stream.VideoStream;
 
 public final class VideoInterface {
 	
@@ -44,7 +44,7 @@ public final class VideoInterface {
 		return super.toString() + "-" + name + ":" + version;
 	}
 	
-	public StreamType getStream(){
+	public VideoStream getStream(){
 		return channel.streamRecive();
 	}
 	

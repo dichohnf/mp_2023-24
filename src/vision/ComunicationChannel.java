@@ -1,12 +1,12 @@
 package vision;
 
-import vision.stream.StreamType;
+import vision.stream.VideoStream;
 
 public interface ComunicationChannel {
 	
 	void sendRequest(String message);
 	
-	void sendStream(StreamType stream);
+	void sendStream(VideoStream stream);
 	
-	StreamType streamRecive();
+	VideoStream streamRecive();
 }

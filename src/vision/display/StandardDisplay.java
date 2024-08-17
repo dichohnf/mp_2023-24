@@ -113,7 +113,7 @@ public final class StandardDisplay implements Display {
 	
 	@Override
 	public void displayStream() {
-		channel.sendStream(ResolutionCompressor.compress(currentValues.selectedInterface.getStream()));
+		channel.sendStream(currentValues.selectedInterface.getStream());
 	}
 		
 	@Override

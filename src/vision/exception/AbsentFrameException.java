@@ -1,6 +1,8 @@
 package vision.exception;
 
-public final class AbsentFrameException extends Exception {
+import java.util.NoSuchElementException;
+
+public final class AbsentFrameException extends NoSuchElementException {
 
 	private static final long serialVersionUID = 1L;
 	
