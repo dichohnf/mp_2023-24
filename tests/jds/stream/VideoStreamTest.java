@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import jds.exception.AbsentFrameException;
 
-public class SimpleStreamTest {
+public class VideoStreamTest {
 	
 	Position origin;
 	VideoFrame frame1;
@@ -24,17 +24,17 @@ public class SimpleStreamTest {
 		frame1 = new MockVideoFrame(origin);
 		frame2 = new MockVideoFrame(origin);
 		frame3 = new MockVideoFrame(origin);
-		stream = new SimpleStream(List.of(frame1, frame2, frame3).iterator());
+		stream = new VideoStream(List.of(frame1, frame2, frame3).iterator());
 	}
 
 	@Test
 	public void testSimpleStream() {
 		assertThatThrownBy(
-				() -> new SimpleStream(null))
+				() -> new VideoStream(null))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("Null frames argument");
 		assertThat(stream)
-			.isInstanceOf(SimpleStream.class)
+			.isInstanceOf(VideoStream.class)
 			.hasNoNullFieldsOrProperties();
 	}
 

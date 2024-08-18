@@ -1,13 +1,39 @@
 package jds.stream;
 
-public interface VideoFrame {
-	
-	public Position getBottomLeftPosition();
-	
-	public Position getTopRightPosition();
-	
-	void moveTo(Position newBottomLeftPosition);
+import java.util.Objects;
 
-	byte[] getData();
+public abstract class VideoFrame {
+
+	private Position bottomLeft;
+	private Position topRight;
+	
+	protected VideoFrame(Position bottomLeft, Position topRight) {
+		setBottomLeftPosition(bottomLeft);
+		setTopRightPosition(topRight);
+	}
+
+	public final Position getBottomLeftPosition() {
+		return bottomLeft;
+	}
+	
+	public final Position getTopRightPosition() {
+		return topRight;
+	}
+	
+	protected final void setBottomLeftPosition(Position bottomLeft) {
+		this.bottomLeft = Objects.requireNonNull(
+				bottomLeft, 
+				"Null bottomLeft argument");
+	}
+
+	protected final void setTopRightPosition(Position topRight) {
+		this.topRight = Objects.requireNonNull(
+				topRight, 
+				"Null topRight argument");
+	}
+
+	public abstract byte[] getData();
+	
+	public abstract void moveTo(Position newBottomLeftPosition);
 	
 }

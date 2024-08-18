@@ -185,5 +185,23 @@ public class PositionTest {
 								: pos2)))
 			.contains(rightBottom);
 	}
+	
+	@Test
+	public void testBottomLeftIntersection() {
+		assertThat(positions.stream()
+				.reduce(Position::bottomLeftIntersection))
+			.satisfies(opt -> opt.orElseThrow().isCongruentWith(leftBottom));
+		assertThat(centerMiddle.bottomLeftIntersection(centerBottom))
+			.satisfies(pos -> pos.isCongruentWith(centerBottom));
+	}
+	
+	@Test
+	public void testTopRightIntersection() {
+		assertThat(positions.stream()
+				.reduce(Position::topRightIntersection))
+			.satisfies(opt -> opt.orElseThrow().isCongruentWith(rightTop));
+		assertThat(centerMiddle.bottomLeftIntersection(centerBottom))
+			.satisfies(pos -> pos.isCongruentWith(rightMiddle));
+	}
 
 }

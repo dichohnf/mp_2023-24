@@ -4,28 +4,31 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
-public final class ComposedFrame implements VideoFrame {
+public final class ComposedFrame extends VideoFrame {
 
 	final Collection<VideoFrame> children;
 	private final FrameCompositor compositor;
-	private Position bottomLeft;
-	private Position topRight;
 	
 	public ComposedFrame(FrameCompositor compositor) {
+		super(new Position(
+				Integer.MIN_VALUE, 
+				Integer.MIN_VALUE), 
+			new Position(
+					Integer.MAX_VALUE, 
+					Integer.MAX_VALUE));
 		this.compositor = Objects.requireNonNull(
 				compositor, 
 				"Null compositor argument");
 		children = new ArrayList<>();
+		/*
+		 * TODO: modificare costruttore con posizioni fittizie o creare una posizione
+		 * finta, oppure utilizzare un optional o far gestire i campi alle sottoclassi??
+		 */
 	}
 	
 	@Override
-	public Position getBottomLeftPosition() {
-		return bottomLeft;
-	}
-
-	@Override
-	public Position getTopRightPosition() {
-		return topRight; 
+	public byte[] getData() {
+		return compositor.compose(children).getData();
 	}
 
 	@Override
@@ -47,23 +50,16 @@ public final class ComposedFrame implements VideoFrame {
 		calculationRelevantPositions();
 		return tmp;
 	}
-
-	@Override
-	public byte[] getData() {
-		children.stream()
-		.forEach(compositor::put);
-	return compositor.compose().getData();
-	}
 	
 	private void calculationRelevantPositions() {
-		bottomLeft = children.stream()
+		setBottomLeftPosition(children.stream()
 				.map(VideoFrame::getBottomLeftPosition)
 				.reduce(Position::bottomLeftIntersection)
-				.orElseThrow();
-		topRight = children.stream()
+				.orElseThrow());
+		setTopRightPosition(children.stream()
 				.map(VideoFrame::getBottomLeftPosition)
 				.reduce(Position::topRightIntersection)
-				.orElseThrow();
+				.orElseThrow());
 	}
 
 }

@@ -1,9 +1,9 @@
 package jds.stream;
 
-public interface FrameCompositor {
+import java.util.Collection;
 
-	void put(VideoFrame frame);
+public interface FrameCompositor {
 	
-	VideoFrame compose();
+	VideoFrame compose(Collection<VideoFrame> frames);
 	
 }
