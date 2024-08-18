@@ -3,9 +3,9 @@ package jds.display;
 import java.util.List;
 import java.util.Objects;
 
-import jds.display.interfaces.video.VideoInterface;
+import jds.Sensor;
+import jds.display.interfaces.VideoInterface;
 import jds.display.mulfunction.MulfunctionChecker;
-import jds.display.sensor.Sensor;
 import jds.exception.AbsentVideoInterfaceException;
 import jds.exception.PoorlyDefinedMeasureException;
 

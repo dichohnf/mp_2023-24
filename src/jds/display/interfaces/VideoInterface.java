@@ -1,4 +1,4 @@
-package jds.display.interfaces.video;
+package jds.display.interfaces;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package jds.display.sensor;
+package jds;
 
 public interface Sensor<T> {
 	

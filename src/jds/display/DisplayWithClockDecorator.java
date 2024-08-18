@@ -2,7 +2,7 @@ package jds.display;
 
 import java.time.LocalTime;
 
-import jds.display.sensor.Sensor;
+import jds.Sensor;
 import jds.exception.PoorlyDefinedMeasureException;
 
 public final class DisplayWithClockDecorator extends DisplayWithSensorDecorator<LocalTime> {

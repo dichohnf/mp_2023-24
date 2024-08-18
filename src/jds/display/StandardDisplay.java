@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import jds.ComunicationChannel;
-import jds.display.interfaces.video.VideoInterface;
+import jds.display.interfaces.VideoInterface;
 import jds.display.mulfunction.MulfunctionChecker;
 import jds.exception.AbsentVideoInterfaceException;
 

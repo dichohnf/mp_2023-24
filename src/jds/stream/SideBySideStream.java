@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public final class SideBySideStream implements VideoStream {
 	
-	private final Collection<VideoStream> childrens;
+	final Collection<VideoStream> childrens;
 	private final FrameCompositor compositor;
 
 	public SideBySideStream(FrameCompositor compositor) {
@@ -17,6 +17,8 @@ public final class SideBySideStream implements VideoStream {
 	}
 	
 	public boolean add(VideoStream child) {
+		if(this == child)
+			throw new IllegalArgumentException("Child to insert is this stream object");
 		return childrens.add(child);
 	}
 	
@@ -29,7 +31,7 @@ public final class SideBySideStream implements VideoStream {
 		childrens.stream()
 			.map(VideoStream::nextFrame)
 			.forEach(
-					frame -> compositor.put(frame, frame.getOrigin()));
+					frame -> compositor.put(frame, frame.getBottomLeftPosition()));
 		return compositor.compose();
 	}
 	

@@ -4,8 +4,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 import jds.ComunicationChannel;
-import jds.display.interfaces.video.VideoInterface;
-import jds.display.sensor.Sensor;
+import jds.Sensor;
+import jds.display.interfaces.VideoInterface;
 import jds.exception.AbsentVideoInterfaceException;
 
 public final class DisplayBuilder {

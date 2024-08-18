@@ -2,7 +2,7 @@ package jds.display;
 
 import java.util.List;
 
-import jds.display.interfaces.video.VideoInterface;
+import jds.display.interfaces.VideoInterface;
 import jds.display.mulfunction.MulfunctionChecker;
 import jds.exception.AbsentVideoInterfaceException;
 

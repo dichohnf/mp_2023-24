@@ -2,7 +2,7 @@ package jds.display;
 
 import java.util.Objects;
 
-import jds.display.sensor.Sensor;
+import jds.Sensor;
 import jds.exception.PoorlyDefinedMeasureException;
 
 public final class DisplayWithBrightnessSensorDecorator extends DisplayWithSensorDecorator<Double> {
