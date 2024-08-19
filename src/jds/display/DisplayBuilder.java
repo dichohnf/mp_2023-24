@@ -6,17 +6,16 @@ import java.util.List;
 import jds.ComunicationChannel;
 import jds.Sensor;
 import jds.display.interfaces.VideoInterface;
-import jds.exception.AbsentVideoInterfaceException;
 
 public final class DisplayBuilder {
 	
-	private int maxNits;
-	private List<String> supportedResolutions;
-	private ComunicationChannel channel;
-	private List<VideoInterface> supportedInterfaces;
-	private Sensor<Double> brightnessSensor;
-	private double saturation;
-	private Sensor<LocalTime> clockSensor;
+	int maxNits;
+	List<String> supportedResolutions;
+	ComunicationChannel channel;
+	List<VideoInterface> supportedInterfaces;
+	Sensor<Double> brightnessSensor;
+	double saturation;
+	Sensor<LocalTime> clockSensor;
 	
 	public DisplayBuilder() {
 		reset();
@@ -57,7 +56,7 @@ public final class DisplayBuilder {
 		clockSensor = sensor;
 	}
 	
-	public Display build() throws AbsentVideoInterfaceException {
+	public Display build() {
 		Display result = new StandardDisplay(maxNits, supportedResolutions, channel, supportedInterfaces);
 		if(brightnessSensor != null)
 			result = new DisplayWithBrightnessSensorDecorator(brightnessSensor, result, saturation);

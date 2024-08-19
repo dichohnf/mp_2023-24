@@ -3,23 +3,23 @@ package jds.display;
 import java.time.LocalTime;
 
 import jds.Sensor;
-import jds.exception.PoorlyDefinedMeasureException;
 
 public final class DisplayWithClockDecorator extends DisplayWithSensorDecorator<LocalTime> {
+
+	private static final int DAY_COLOR = 5;
+	private static final int NIGHT_COLOR = 10;
 
 	public DisplayWithClockDecorator(Sensor<LocalTime> sensor, Display component) {
 		super(sensor, component);
 	}
 
 	@Override
-	public void setValue(LocalTime measure) throws PoorlyDefinedMeasureException {
+	public void setValue(LocalTime measure) {
 		if(measure.isBefore(LocalTime.of(07, 00)) 
 		|| measure.isAfter(LocalTime.of(22, 00)))
-			setNightColor();
-	}
-
-	private void setNightColor() {
-		setColorTemperature(10);
+			setColorTemperature(NIGHT_COLOR);
+		else
+			setColorTemperature(DAY_COLOR);
 	}
 
 }

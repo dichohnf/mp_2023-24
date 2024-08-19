@@ -14,6 +14,8 @@ public interface Display {
 
 	void displayError(String message);
 	
+	List<VideoInterface> getSupportedInterfaces();
+	
 	void setBrightness(double newBrightness);
 	
 	double getBrightness();
@@ -32,7 +34,7 @@ public interface Display {
 	
 	List<VideoInterface> getConnectedInterfaces();
 
-	void selectInputInterface(VideoInterface videoIterface);
+	void selectInputInterface(VideoInterface videoIterface) throws AbsentVideoInterfaceException;
 	
 	VideoInterface getSelectedInterface();
 	

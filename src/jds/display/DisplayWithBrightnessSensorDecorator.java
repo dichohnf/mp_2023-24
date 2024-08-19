@@ -7,17 +7,18 @@ import jds.exception.PoorlyDefinedMeasureException;
 
 public final class DisplayWithBrightnessSensorDecorator extends DisplayWithSensorDecorator<Double> {
 	
-	private static final Double DEFAULT_SATURATION_LUX = Double.valueOf(10000);
-	private final Double saturationLuxAmount;
+	static final Double DEFAULT_SATURATION_LUX = Double.valueOf(10000);
+	final Double saturationLuxAmount;
 
 	public DisplayWithBrightnessSensorDecorator(
 			Sensor<Double> sensor, Display component, Double saturationLuxAmount) {
 		super(sensor, component);
-		if(saturationLuxAmount < 0)
-			throw new IllegalArgumentException("Negative saturation argument");
-		this.saturationLuxAmount = Objects.requireNonNullElse(
+		saturationLuxAmount = Objects.requireNonNullElse(
 				saturationLuxAmount, 
 				DEFAULT_SATURATION_LUX);
+		if(saturationLuxAmount < 0)
+			throw new IllegalArgumentException("Negative saturation argument");
+		this.saturationLuxAmount = saturationLuxAmount;
 	}
 
 	@Override

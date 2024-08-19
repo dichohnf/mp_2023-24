@@ -12,7 +12,7 @@ import jds.exception.PoorlyDefinedMeasureException;
 public abstract class DisplayWithSensorDecorator<T> implements Display{
 
 	private final Sensor<T> sensor;
-	private final Display component;
+	final Display component;
 	
 	protected DisplayWithSensorDecorator(Sensor<T> sensor, Display component) {
 		this.sensor = Objects.requireNonNull(
@@ -20,7 +20,7 @@ public abstract class DisplayWithSensorDecorator<T> implements Display{
 				"Null sensor argument");
 		this.component = Objects.requireNonNull(
 				component, 
-				"Null cmponent argument");
+				"Null component argument");
 	}
 	
 	@Override
@@ -39,6 +39,11 @@ public abstract class DisplayWithSensorDecorator<T> implements Display{
 	public void displayError(String message) {
 		setBestConfiguration();
 		component.displayError(message);
+	}
+	
+	@Override
+	public List<VideoInterface> getSupportedInterfaces() {
+		return component.getSupportedInterfaces();
 	}
 	
 	@Override
@@ -84,7 +89,7 @@ public abstract class DisplayWithSensorDecorator<T> implements Display{
 	}
 	
 	@Override
-	public final void selectInputInterface(VideoInterface videoIterface) {
+	public final void selectInputInterface(VideoInterface videoIterface) throws AbsentVideoInterfaceException {
 		component.selectInputInterface(videoIterface);
 	}
 	

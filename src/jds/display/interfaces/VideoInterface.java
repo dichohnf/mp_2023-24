@@ -12,9 +12,15 @@ public final class VideoInterface {
 	private final ComunicationChannel channel;
 	
 	public VideoInterface(String name, String version, ComunicationChannel channel) {
-		this.name = Objects.requireNonNull(name, "Null name argument");
-		this.version = Objects.requireNonNull(version, "Null version argument");
-		this.channel = Objects.requireNonNull(channel, "Null channel argument");
+		this.name = Objects.requireNonNull(
+				name, 
+				"Null name argument");
+		this.version = Objects.requireNonNull(
+				version, 
+				"Null version argument");
+		this.channel = Objects.requireNonNull(
+				channel, 
+				"Null channel argument");
 	}
 
 	public String getName() {
