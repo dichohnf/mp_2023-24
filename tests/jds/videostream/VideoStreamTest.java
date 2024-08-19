@@ -1,4 +1,4 @@
-package jds.stream;
+package jds.videostream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -12,19 +12,31 @@ import jds.exception.AbsentFrameException;
 
 public class VideoStreamTest {
 	
-	Position origin;
-	VideoFrame frame1;
-	VideoFrame frame2;
-	VideoFrame frame3;
+	Position bottomLeft1;
+	Position bottomLeft2;
+	Position topRight1;
+	Position topRight2;
+	byte[] data1;
+	byte[] data2;
+	VideoFrame simple1;
+	VideoFrame simple2;
+	ComposedFrame composed;
 	VideoStream stream;
 
 	@Before
 	public void setUp() {
-		origin = new Position(0,0);
-		frame1 = new MockVideoFrame(origin);
-		frame2 = new MockVideoFrame(origin);
-		frame3 = new MockVideoFrame(origin);
-		stream = new VideoStream(List.of(frame1, frame2, frame3).iterator());
+		bottomLeft1	= new Position(0,0);
+		bottomLeft2	= new Position(1,2);
+		topRight1	= new Position(1366, 768);
+		topRight2	= new Position(1567, 1314);
+		data1 		= "Bytes string.".getBytes();
+		data2 		= "Bytes string copy.".getBytes();
+		simple1 	= new SimpleFrame(bottomLeft1, topRight1, data1);
+		simple2 	= new SimpleFrame(bottomLeft2, topRight2, data2);
+		composed 	= new ComposedFrame(new MockFrameCompositor());
+		composed.add(simple1);
+		composed.add(simple2);
+		stream 		= new VideoStream(List.of(simple1, simple2, composed).iterator());
 	}
 
 	@Test
@@ -41,11 +53,11 @@ public class VideoStreamTest {
 	@Test
 	public void testNextFrame() {
 		assertThat(stream.nextFrame())
-			.isSameAs(frame1);
+			.isSameAs(simple1);
 		assertThat(stream.nextFrame())
-			.isSameAs(frame2);
+			.isSameAs(simple2);
 		assertThat(stream.nextFrame())
-			.isSameAs(frame3);
+			.isSameAs(composed);
 		assertThatThrownBy(() -> stream.nextFrame())
 			.isInstanceOf(AbsentFrameException.class)
 			.hasMessage("No frame found");

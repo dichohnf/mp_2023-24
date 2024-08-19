@@ -3,7 +3,7 @@ package jds.display.interfaces;
 import java.util.Objects;
 
 import jds.ComunicationChannel;
-import jds.stream.VideoStream;
+import jds.videostream.VideoStream;
 
 public final class VideoInterface {
 	

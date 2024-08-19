@@ -1,4 +1,4 @@
-package jds.stream;
+package jds.videostream;
 
 import java.util.Objects;
 
@@ -33,7 +33,5 @@ public abstract class VideoFrame {
 	}
 
 	public abstract byte[] getData();
-	
-	public abstract void moveTo(Position newBottomLeftPosition);
 	
 }

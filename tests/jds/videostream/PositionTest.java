@@ -1,4 +1,4 @@
-package jds.stream;
+package jds.videostream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

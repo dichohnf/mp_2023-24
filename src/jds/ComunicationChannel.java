@@ -1,6 +1,6 @@
 package jds;
 
-import jds.stream.VideoStream;
+import jds.videostream.VideoStream;
 
 public interface ComunicationChannel {
 	

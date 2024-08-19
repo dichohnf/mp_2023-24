@@ -1,4 +1,4 @@
-package jds.stream;
+package jds.videostream;
 
 import java.util.Iterator;
 import java.util.Objects;
