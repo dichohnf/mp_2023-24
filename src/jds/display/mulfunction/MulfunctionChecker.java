@@ -1,20 +1,19 @@
 package jds.display.mulfunction;
 
-import java.util.Optional;
-
 import jds.display.Display;
 
 public abstract class MulfunctionChecker {
 
-	private final Optional<MulfunctionChecker> nextChecker;
+	private final MulfunctionChecker nextChecker;
 
 	protected MulfunctionChecker(MulfunctionChecker nextChecker) {
-		this.nextChecker = Optional.ofNullable(nextChecker);
+		this.nextChecker = nextChecker;
 	}
 	
 	public String checkMulfunction(Display display) {
-		nextChecker.ifPresent(next -> next.checkMulfunction(display));
-		return "No mulfunction detected";
+		return (nextChecker != null)
+				?nextChecker.checkMulfunction(display)
+				:"No mulfunction detected";
 	}
 
 }

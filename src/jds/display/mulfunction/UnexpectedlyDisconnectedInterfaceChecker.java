@@ -12,9 +12,9 @@ public final class UnexpectedlyDisconnectedInterfaceChecker extends MulfunctionC
 	public String checkMulfunction(Display display) {
 		if(display.getConnectedInterfaces()
 				.stream().allMatch(
-						connected -> connected != display.getSelectedInterface())) {
-			display.displayError("Input Error: Unexpectedly disconnected interface");
-			return "Input Error: Unexpectedly disconnected interface";
+						connected -> !connected.equals(display.getSelectedInterface()))) {
+			display.displayError("Unexpectedly disconnected interface");
+			return "Unexpectedly disconnected interface";
 		}
 		return super.checkMulfunction(display);
 	}
