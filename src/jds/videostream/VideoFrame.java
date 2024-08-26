@@ -20,15 +20,15 @@ public abstract class VideoFrame {
 		return topRight;
 	}
 	
-	protected final void setBottomLeftPosition(Position bottomLeft) {
+	protected final void setBottomLeftPosition(Position position) {
 		this.bottomLeft = Objects.requireNonNull(
-				bottomLeft, 
+				position, 
 				"Null bottomLeft argument");
 	}
 
-	protected final void setTopRightPosition(Position topRight) {
+	protected final void setTopRightPosition(Position position) {
 		this.topRight = Objects.requireNonNull(
-				topRight, 
+				position, 
 				"Null topRight argument");
 	}
 

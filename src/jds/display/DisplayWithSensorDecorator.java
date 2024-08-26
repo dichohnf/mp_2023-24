@@ -11,8 +11,8 @@ import jds.exception.PoorlyDefinedMeasureException;
 
 public abstract class DisplayWithSensorDecorator<T> implements Display{
 
-	private final Sensor<T> sensor;
 	final Display component;
+	private final Sensor<T> sensor;
 	
 	protected DisplayWithSensorDecorator(Sensor<T> sensor, Display component) {
 		this.sensor = Objects.requireNonNull(
@@ -84,6 +84,7 @@ public abstract class DisplayWithSensorDecorator<T> implements Display{
 		return component.disconnectInterface(videoInterface);
 	}
 	
+	@Override
 	public List<VideoInterface> getConnectedInterfaces(){
 		return component.getConnectedInterfaces();
 	}

@@ -21,14 +21,8 @@ public final class ComposedFrame extends VideoFrame {
 	
 	@Override
 	public byte[] getData() {
-		return compositor.composedData(children);
+		return compositor.composeData(children);
 	}
-
-//	@Override
-//	public void moveTo(Position newBottomLeftPosition) {
-//		children.forEach(frame -> moveTo(newBottomLeftPosition));
-//		calculationRelevantPositions();
-//	}
 	
 	public boolean add(VideoFrame child) {
 		if(this == child)

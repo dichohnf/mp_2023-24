@@ -4,6 +4,6 @@ import java.util.Collection;
 
 public interface FrameCompositor {
 	
-	byte[] composedData(Collection<VideoFrame> frames);
+	byte[] composeData(Collection<VideoFrame> frames);
 	
 }

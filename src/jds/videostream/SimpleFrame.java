@@ -18,12 +18,4 @@ public final class SimpleFrame extends VideoFrame {
 		return data;
 	}
 
-//	@Override
-//	public void moveTo(Position newBottomLeftPosition) {
-//		setTopRightPosition(new Position(
-//				newBottomLeftPosition.getX() + getTopRightPosition().getX() - getBottomLeftPosition().getX(), 
-//				newBottomLeftPosition.getY() + getTopRightPosition().getY() - getBottomLeftPosition().getY()));
-//		setBottomLeftPosition(newBottomLeftPosition);
-//	}
-
 }

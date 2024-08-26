@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 public final class MockFrameCompositor implements FrameCompositor {
 
 	@Override
-	public byte[] composedData(Collection<VideoFrame> frames) {
+	public byte[] composeData(Collection<VideoFrame> frames) {
 	    return frames.stream()
                 .map(VideoFrame::getData)
                 .flatMapToInt(arr -> IntStream.range(0, arr.length).map(i -> arr[i]))
