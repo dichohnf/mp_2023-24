@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import jds.ComunicationChannel;
-import jds.MockComunicationChannel;
+import jds.StreamChannel;
+import jds.MockStreamChannel;
 import jds.display.Display;
 import jds.display.DisplaySetterToTestMulfunctions;
 import jds.display.StandardDisplay;
@@ -19,9 +19,9 @@ public class UnexpectedlyChangedResolutionCheckerTest {
 	
 	int maxNits;
 	List<String> supportedResolutions;
-	ComunicationChannel displayChannel;
+	StreamChannel displayChannel;
 	List<VideoInterface> supportedInterfaces;
-	ComunicationChannel interfaceChannel;
+	StreamChannel interfaceChannel;
 	VideoInterface videoInterface;
 	Display display;
 	MulfunctionChecker checker1;
@@ -31,8 +31,8 @@ public class UnexpectedlyChangedResolutionCheckerTest {
 	public void setUp() {
 		maxNits 			= 600;
 		supportedResolutions= List.of("1366x768", "720p");
-		displayChannel 		= new MockComunicationChannel();
-		interfaceChannel 	= new MockComunicationChannel();
+		displayChannel 		= new MockStreamChannel();
+		interfaceChannel 	= new MockStreamChannel();
 		videoInterface 		= new VideoInterface("VGA", "WVGA", interfaceChannel);
 		supportedInterfaces = List.of(videoInterface);
 		display 			= new StandardDisplay(maxNits, supportedResolutions, displayChannel, supportedInterfaces);

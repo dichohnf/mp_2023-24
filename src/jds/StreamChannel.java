@@ -2,7 +2,7 @@ package jds;
 
 import jds.videostream.VideoStream;
 
-public interface ComunicationChannel {
+public interface StreamChannel {
 	
 	void sendRequest(String message);
 	

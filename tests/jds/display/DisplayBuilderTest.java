@@ -8,8 +8,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import jds.ComunicationChannel;
-import jds.MockComunicationChannel;
+import jds.StreamChannel;
+import jds.MockStreamChannel;
 import jds.Sensor;
 import jds.display.interfaces.VideoInterface;
 
@@ -17,8 +17,8 @@ public class DisplayBuilderTest {
 	
 	int	maxNits;
 	List<String> supportedResolutions;
-	ComunicationChannel displayChannel;
-	ComunicationChannel interfaceChannel;
+	StreamChannel displayChannel;
+	StreamChannel interfaceChannel;
 	VideoInterface videoInterface;
 	List<VideoInterface> supportedInterfaces;
 	Sensor<Double> brightnessSensor;
@@ -30,8 +30,8 @@ public class DisplayBuilderTest {
 	public void setUp() {
 		maxNits = 600;
 		supportedResolutions = List.of("720p", "1080p");
-		displayChannel = new MockComunicationChannel();
-		interfaceChannel = new MockComunicationChannel();
+		displayChannel = new MockStreamChannel();
+		interfaceChannel = new MockStreamChannel();
 		videoInterface = new VideoInterface("VGA", "WVGA", interfaceChannel);
 		supportedInterfaces = List.of(videoInterface);
 		brightnessSensor = (Sensor<Double>) () -> Double.valueOf(6000);
@@ -64,7 +64,7 @@ public class DisplayBuilderTest {
 
 	@Test
 	public void testReset() {
-		builder.maxNits= maxNits ;
+		builder.maxNits= maxNits;
 		builder.supportedResolutions = List.of("720p", "1080p");
 		builder.channel = displayChannel;
 		builder.supportedInterfaces = supportedInterfaces;
@@ -77,7 +77,7 @@ public class DisplayBuilderTest {
 
 	@Test
 	public void testBuildWithNoSensors() {
-		builder.maxNits= maxNits ;
+		builder.maxNits= maxNits;
 		builder.supportedResolutions = List.of("720p", "1080p");
 		builder.channel = displayChannel;
 		builder.supportedInterfaces = supportedInterfaces;
@@ -87,7 +87,7 @@ public class DisplayBuilderTest {
 	 
 	@Test
 	public void testBuildWithBrightnessSensor() {
-		builder.maxNits= maxNits ;
+		builder.maxNits= maxNits;
 		builder.supportedResolutions = List.of("720p", "1080p");
 		builder.channel = displayChannel;
 		builder.supportedInterfaces = supportedInterfaces;
@@ -99,7 +99,7 @@ public class DisplayBuilderTest {
 	 
 	@Test
 	public void testBuildWithClockSensor() {
-		builder.maxNits= maxNits ;
+		builder.maxNits= maxNits;
 		builder.supportedResolutions = List.of("720p", "1080p");
 		builder.channel = displayChannel;
 		builder.supportedInterfaces = supportedInterfaces;
@@ -110,7 +110,7 @@ public class DisplayBuilderTest {
 	 
 	@Test
 	public void testBuildWithBothSensors() {
-		builder.maxNits= maxNits ;
+		builder.maxNits= maxNits;
 		builder.supportedResolutions = List.of("720p", "1080p");
 		builder.channel = displayChannel;
 		builder.supportedInterfaces = supportedInterfaces;

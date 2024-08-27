@@ -8,13 +8,13 @@ import jds.videostream.MockFrameCompositor;
 import jds.videostream.VideoFrame;
 import jds.videostream.VideoStream;
 
-public class MockComunicationChannel implements ComunicationChannel {
+public class MockStreamChannel implements StreamChannel {
 
 	public List<String> requests;
 	public List<VideoStream> sentStreams;
 	public VideoStream recivedStream;
 	
-	public MockComunicationChannel() {
+	public MockStreamChannel() {
 		requests = new ArrayList<>();
 		sentStreams = new ArrayList<>();
 		recivedStream = new VideoStream(List.of(

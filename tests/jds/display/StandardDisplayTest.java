@@ -10,8 +10,8 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
-import jds.ComunicationChannel;
-import jds.MockComunicationChannel;
+import jds.StreamChannel;
+import jds.MockStreamChannel;
 import jds.display.interfaces.VideoInterface;
 import jds.display.mulfunction.MockMulfunctionChecker;
 import jds.display.mulfunction.MulfunctionChecker;
@@ -21,9 +21,9 @@ public class StandardDisplayTest {
 
 	int maxNits;
 	List<String> supportedResolutions;
-	ComunicationChannel displayChannel;
+	StreamChannel displayChannel;
 	List<VideoInterface> supportedInterfaces;
-	ComunicationChannel interfaceChannel;
+	StreamChannel interfaceChannel;
 	VideoInterface videoInterface;
 	Display display;
 	
@@ -31,8 +31,8 @@ public class StandardDisplayTest {
 	public void setUp() {
 		maxNits = 600;
 		supportedResolutions= List.of("1366x768", "720p");
-		displayChannel = new MockComunicationChannel();
-		interfaceChannel = new MockComunicationChannel();
+		displayChannel = new MockStreamChannel();
+		interfaceChannel = new MockStreamChannel();
 		videoInterface = new VideoInterface("VGA", "WVGA", interfaceChannel);
 		supportedInterfaces = List.of(videoInterface);
 		display = new StandardDisplay(maxNits, supportedResolutions, displayChannel, supportedInterfaces);
@@ -97,7 +97,7 @@ public class StandardDisplayTest {
 		((StandardDisplay)display).selectedInterface = Optional.of(videoInterface);
 		display.displayStream();
 		assertThat(
-				((MockComunicationChannel) displayChannel).sentStreams.get(0))
+				((MockStreamChannel) displayChannel).sentStreams.get(0))
 			.isSameAs(videoInterface.getStream());
 	}
 
@@ -105,7 +105,7 @@ public class StandardDisplayTest {
 	public void testDisplayMenu() {
 		display.displayMenu();
 		assertThat(
-				((MockComunicationChannel) displayChannel).requests.get(0))
+				((MockStreamChannel) displayChannel).requests.get(0))
 			.isEqualTo("Menu");
 	}
 
@@ -113,7 +113,7 @@ public class StandardDisplayTest {
 	public void testDisplayError() {
 		display.displayError("error test");
 		assertThat(
-				((MockComunicationChannel) displayChannel).requests.get(0))
+				((MockStreamChannel) displayChannel).requests.get(0))
 			.isEqualTo("Error: error test");
 	}
 
@@ -177,7 +177,7 @@ public class StandardDisplayTest {
 				() -> display.connectInterface(
 						new VideoInterface("HDMI",
 								"1.1", 
-								new MockComunicationChannel())))
+								new MockStreamChannel())))
         	.isInstanceOf(AbsentVideoInterfaceException.class)
         	.hasMessage("Impossible connection: Display is not provided with specified video interface");
         assertThat(display.connectInterface(videoInterface))

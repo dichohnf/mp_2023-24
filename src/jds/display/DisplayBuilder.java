@@ -3,7 +3,7 @@ package jds.display;
 import java.time.LocalTime;
 import java.util.List;
 
-import jds.ComunicationChannel;
+import jds.StreamChannel;
 import jds.Sensor;
 import jds.display.interfaces.VideoInterface;
 
@@ -11,7 +11,7 @@ public final class DisplayBuilder {
 	
 	int maxNits;
 	List<String> supportedResolutions;
-	ComunicationChannel channel;
+	StreamChannel channel;
 	List<VideoInterface> supportedInterfaces;
 	Sensor<Double> brightnessSensor;
 	double saturation;
@@ -43,7 +43,7 @@ public final class DisplayBuilder {
 		this.supportedInterfaces = supportedInterfaces;
 	}
 	
-	public void setChannel(ComunicationChannel channel) {
+	public void setChannel(StreamChannel channel) {
 		this.channel = channel;
 	}
 	

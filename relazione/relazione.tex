@@ -49,52 +49,88 @@ urlcolor=cyan]{hyperref}
 	\vspace{1em}\noindent\rule{\textwidth}{2pt}
 	
 	\section{Presentazione progetto}
-	Viene presentato nel seguito un progetto fittizio che occorre a mostrare il contesto nel quale nasce il codice sviluppato e in cui, ipoteticamente, si vorrebbe inserire.
-	\subsection{Contesto: DDS} \label{fresco}
-	\textbf{JDS}, ovvero \textbf{JDS is a Dispaly System}, è un software ideato per facilitare l'organizzazione di convegni, nato per accompagnare e supportare organizzatori di eventi, di una qualsiasi tipologia (non solo convegni quindi), in tutte le fasi del processo, dalla programmazione del calendario alla gestione delle prenotazioni e di eventuali pagamenti. Questo è stato progettato con l'obbiettivo di fornire una soluzione completa, gratuita e open source per la gestione e la pianificazione di eventi di ogni tipo, che si tratti di conferenze, workshop, festival o incontri sociali.\\
+	Viene presentato nel seguito un progetto fittizio che occorre a mostrare il contesto dal quale prende spunto il codice sviluppato e in cui, ipoteticamente, si vorrebbe inserire.
+	\subsection{Contesto: JDS} \label{jds}
+	\textbf{J.D.S.}, ovvero \textbf{JDS is a Dispaly System}, è un software che nasce dall’esigenza di creare un ambiente di simulazione avanzato per display utilizzati in computer, console e altri dispositivi elettronici.Con l’aumento della complessità e della varietà dei display, è diventato cruciale disporre di strumenti che permettano di testare e ottimizzare le interfacce grafiche in modo efficiente e accurato. JDS si propone di fornire una piattaforma versatile e potente per la simulazione di display, consentendo agli sviluppatori di prevedere e risolvere problemi prima della fase di produzione.\\
 	Le \textbf{caratteristiche principali} del software sono:
-	\begin{itemize}\setlength\itemsep{-3pt}
-		\item \textbf{Gestione completa degli eventi:} Da piccoli meeting a grandi conferenze, FRESCO permette di gestire ogni aspetto dell’evento, inclusi la registrazione dei partecipanti, la pianificazione delle sessioni e la gestione delle risorse.
-		\item \textbf{Interfaccia intuitiva:} Con un’interfaccia utente amichevole e facile da navigare, FRESCO rende l’organizzazione degli eventi accessibile a tutti, indipendentemente dal livello di esperienza tecnica.
-		\item \textbf{Personalizzazione flessibile:} FRESCO offre ampie opzioni di personalizzazione per adattarsi alle specifiche esigenze di ogni evento, consentendo agli organizzatori di creare un’esperienza unica per i partecipanti.
-		\item \textbf{Supporto della comunità:} Essendo un progetto open source, FRESCO è stato pensato per essere esteso e sostenuto interamente da una comunità di sviluppatori e organizzatori di eventi, garantendo aggiornamenti mirati e necessari dal punto di vista dei client.
-		\item \textbf{Sostenibilità e accessibilità:} FRESCO è impegnato a promuovere la sostenibilità e l’accessibilità, offrendo strumenti per rendere gli eventi inclusivi e rispettosi dell’ambiente.
-	\end{itemize}
-	L'acrostico FRESCO vuole rappresentare la voglia di qualcosa di nuovo, qualcosa che si discosti dai più comuni programmi di organizzazione di eventi, limitando la tipica diffusione di meta-dati e aumentando la consapevolezza su tematiche critiche, spingendo l'organizzazione a valutare alternative sostenibili o raccogliendo segnalazioni qualora le opzioni non siano soddisfacenti.
-	
-	\subsection{Inserimento del progetto in FRESCO} \label{fresco:inserimento-elaborato}
-	Il progetto presentato al punto precedente si compone di varie parti che cooperano tra loro. In questo contesto possiamo identificare il posizionamento dell'elaborato come la parte centrale del sistema per l'organizzazione di eventi, l'interno dell'architettura che modella i concetti di luogo, persona eccetera e che definisce i vincoli che sussistono tra gli oggetti. Non vengono quindi prese in considerazione nell'elaborato varie delle caratteristiche principali del progetto, come l'interfaccia per l'utilizzatore finale, il supporto della comunità o la sostenibilità, rimandando la loro implementazione e astraendo, laddove necessario, per definire un'interfaccia di funzionamento.
-	
+	\begin{itemize}\setlength\itemsep{-3pt}		
+		\item \textbf{\underline{J}ava:} il codice è interamente scritto in linguaggio Java, aumentando la portabilità dello stesso progetto.
+		\item \textbf{\underline{D}isplay Simulation:} Riproduzione accurata delle condizioni di visualizzazione su diversi tipi di display.
+		\item \textbf{\underline{S}ystem Compatibility:} Supporto per una vasta gamma di dispositivi, dai computer alle console di gioco.
+		\item \textbf{In-depth Analysis:} Funzionalità di monitoraggio e reportistica per identificare e risolvere problemi di performance e qualità.
+		\item \textbf{Scalability:} Capacità di adattarsi a progetti di qualsiasi dimensione e complessità.
+	\end{itemize}	
+	\subsection{Inserimento del progetto in JDS} \label{jds:inserimento-elaborato}
+	Il progetto presentato al punto precedente si compone di varie parti che cooperano tra loro. In questo contesto possiamo identificare il posizionamento dell'elaborato come la parte centrale del sistema, la parte che implementa i concetti di display e parte dei servizi propri dei sistemi operativi interni agli stessi display. Non vengono quindi prese in considerazione, nel progetto sviluppato, le caratteristiche di reportistica e monitoraggio o strumenti di simulazione avanzati.
+		
 	\section{Specifiche Java}
-	L'elaborato è stato implementano e testato attraverso l'utilizzo dell'IDE Eclipse, versione Linux 2024-06 (\texttt{java.verision=21.0.3}), sul sistema Kubuntu, kernel \texttt{6.8.0-38-generic} e utilizzando per questo la versione 11 di Java (\texttt{java-11-openjdk-amd64}).
+	L'elaborato è stato implementano e testato attraverso l'utilizzo dell'IDE Eclipse, versione Linux 2024-06 (4.32.0) (fino alla versione Java \texttt{java.verision=21.0.4}), sul sistema Kubuntu, kernel \texttt{6.8.0-38-generic} e utilizzando per questo la versione 11 di Java (\texttt{java-11-openjdk-amd64}).
 	Per i test sono stati utilizzati i framework JUnit4 e AssertJ\footnote{Il framework AssertJ non è presente tra le librerie standard di Java, quindi è stato inserito come libreria aggiuntiva all'indirizzo ''\texttt{\$ROOT\_PROJECT\_DIRECTORY/test-libs/assertj-core-3.26.0.jar}'' e inserita nel buildpath del progetto Eclipse.}.
 	\section{Funzionalità del progetto}
-	Il progetto implementa la parte centrale del software FRESCO, come spiegato alla sezione \ref{fresco:inserimento-elaborato}. L'elaborato, in particolare, implementa il sistema che permette la generazione di nuovi eventi, l'organizzazione di questi, permettendo di recuperare il calendario contente tutti gli eventi, e la gestione delle prenotazioni agli stessi, permettendo, qualora una persona sia in dubbio se prenotarsi/pagare un evento, di osservare le modifiche che vengo apportate a questo (modifica giorno, modifica prezzo eccetera). Infine, in relazione a una convention, è possibile per ogni persona recuperare il calendario personale, che vi partecipi come uditore o come esperto. Da questa ultima affermazione risulta chiaro che ogni persona inserita è candidabile per l'assunzione in qualche evento.
+	Il progetto implementa, come detto, un sistema per la generazione e la gestione di display.\\
+	I display possono avere nessuno, uno o più sensori, come per esempio un sensore di luminosità esterna, al fine di impostare automaticamente la luminosità dello schermo, o un orologio, al fine di modificare la gamma di colori durante le ore notturne.\\
+	Ogni display può incorrere in malfunzionamenti, è quindi stato implementato un meccanismo di controllo dei malfunzionamenti, in particolare nel caso di un cambio inatteso della risoluzione dello schermo o di una disconnessione improvvisa di un'interfaccia video.\\
+	Data la varietà dei possibili schermi, è stato implementato un costruttore per questi che rendesse la creazione meno complessa, attraverso un'interfaccia più fluida.\\
+	Infine, ogni display dovrà proiettare, attraverso un cavo/canale sullo schermo un flusso di frame ricevuti de un'interfaccia video. Questi frame possono essere semplici o composti, ovvero possono rappresentare un tipico schermo di un dispositivo, oppure possono essere composti in vari modi, quindi generando un mosaico di frame.
 	\section{Diagramma UML}
-	Si mostra a fig.\ref{classdiagram} il diagramma UML delle classi senza metodi e campi, per mostrare la struttura del progetto.
+	Si mostra a fig.\ref{fig:classdiagram} il diagramma UML delle classi:\\
+	\noindent\includegraphics[width=\textwidth]{diagramma/ClassDiagramm-NoTypes.pdf}
+	\captionof{figure}{Diagramma delle classi descritto con \textit{Unified Modelling Lenguage}.}
+	\label{fig:classdiagram}
 	
-	\begin{figure}[htb!]
-		\noindent\includegraphics[width=\textwidth]{diagramma/ClassDiagramm-NoTypes.pdf}
-		\captionof{figure}{Diagramma compatto delle classi descritto con \textit{Unified Modelling Lenguage}.}
-		\label{classdiagram}
-	\end{figure}
 	\section{Lista pattern implementati}
 	\begin{itemize}
-		\item Observer $\rightarrow$ Persona, Event;
-		% \item Decorator $\rightarrow$ StaffActivityManagerDecorator;
-		\item TemplateMethod $\rightarrow$ InternalLocation::getSpecifications;
-		\item FactoryMethod $\rightarrow$ CalendarGenerator::calendarOf;
-		%		\item Bilder $\rightarrow$ Event; % Sarebbe utile e abbastanza fattibile
+		\item Decorator, versione con un'unica responsabilità;
+		\item Template Method;
+		\item Chain of Responsability;
+		\item Builder, versione priva di astrazione;
+		\item Composite, variante type safe.
 	\end{itemize}
 	\section{Descrizione scelte di design}
+	\subsection{Gerarchia \texttt{Display}, \texttt{Sensor} e \texttt{StreamChannel}}
+	Per l'implementazione di \texttt{Display} è stato utilizzato il pattern \textbf{Decorator}\footnote{Tutta la nomenclatura per la descrizione dei componenti dei pattern proviene dal manuale \textit{Design patterns: elements of reusable object-oriented}, {\fontfamily{bch}\selectfont G.O.F.}.} per l'aggiunta di un'unica responsabilità, ovvero la gestione di sensori. Il motivo primario che ha portato alla decisione di utilizzare il pattern è la grande varietà di sensori che possono essere associati ad un display, permettendo la creazione dinamica di innumerevoli display in base alle combinazioni di sensori.\\
+	L'oggetto da decorare, il \textit{ConcreteComponent}, risulta essere \texttt{StandardDisplay} mentre l'unico \textit{Decorator} risulta essere \texttt{DisplayWithSensorDecorator}.\\
+	Il motivo per cui \texttt{DisplayWithSensorDecorator} è un'astrazione e le sottoclassi \texttt{DisplayWithBrightnessSensorDecorator} e \texttt{DisplayWithClockDecorator} non sono stati implementati come \textit{ConcreteDecorator} è la volontà di ridurre la duplicazione di codice, implementando direttamente le operazioni ereditate da \texttt{Display} nella classe base, e astraendo solo le operazioni strettamente dipendenti dai sensori, ovvero astraendo \textit{setValue()}. Cosi facendo viene riutilizzato il codice del decoratore per ogni tipologia di sensore. Attraverso l'uso quindi del pattern \textbf{Template Method} è stato possibile definire un algoritmo comune per il metodo \textit{setBestConfiguration()}, il template method, che richiamasse la funzione \textit{setValue()}, implementata dalle sottoclassi (unico metodo da implementare per creare un nuovo decoratore di tipo \texttt{DisplayWithSensorDecorator}).\\
+	Inoltre le classi presenti nel sistema che implementano \texttt{DisplayWithSensorDecorator} utilizzano nel metodo \textit{setValue()} dei valori di default predefiniti. Questa caratteristica è modificabile e deriva dal contesto, si può prevedere una comoda modifica che permetta la specificazione delle variabili in modo che il calcolo sia specifico per ogni sensore e per ogni display.\\
+	Infine, a proposito di \texttt{DisplayWithBrightnessSensorDecorator} e del metodo \textit{setValue()}, è stato implementato un semplice algoritmo di calcolo lineare, ma attraverso l'utilizzo del pattern \textbf{Strategy} (\underline{non} implementato) potevano essere create varie tipologie di algoritmo (lineare, logaritmico, ecc..) in modo che fosse possibile differenziare ulteriormente i display e i loro meccanismi di funzionamento specifici.\\
+	Non avendo implementato un meccanismo di logging, il metodo \textit{DisplayWithSensorDecorator.setBestConfiguration()} (così come i metodi \textit{MulfunctionChecker.checkMulfunction($\cdot$)} che vedremo in seguito) al momento stampa le eccezioni pervenute dai sensori sulla console. Si prevede una modifica del codice nel senso della creazione di un report complessivo del sistema, ma che risultava non utile al fine del progetto.\\
+	Infine, sempre dettata dal contesto in cui si inserisce l'elaborato, è stata utilizzata una semplificazione per la proiezione dei frame sul display, ovvero vengono passati flussi o comandi all'interfaccia \texttt{StreamChannel}, la quale poi avrà il compito di gestire le richieste.\\
+	\begin{minipage}[c]{.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{diagramma/ClassDiagramm-DisplayHierarchy.pdf}
+		\captionof{figure}{Gerarchia Display.}
+		\label{fig:display}
+	\end{minipage}
+%	\hfill
+%	\begin{minipage}[c]{.5\textwidth}
+%		
+%	\end{minipage}
+
+	
+
+	
+	
+	\subsection{Gerarchia \texttt{MulfunctionChecker}}
+	Per il controllo dei malfunzionamenti è stato implementato il pattern \textbf{Chain of Responsibility}, al fine di poter aggiungere controlli dinamicamente e di poter personalizzare la catena in base allo specifico display. Il pattern ha come \textit{Handler} la classe \texttt{MulfunctionChecker} e le sottoclassi rappresentano i \textit{ConcreteHandler} che implementano gli specifici controlli da effettuare.\\
+	
+	\subsection{\texttt{Builder}}
+	Data la varietà delle tipologie di Display e data la grande quantità di argomenti che questi possiedono è stato ritenuto che l'implementazione del pattern \textbf{Builder}, sebbene nella versione senza astrazione, potesse rendere più agevole generazione di display, permettendone la creazione in modo fluido. La classe \texttt{DisplayBuilder} rappresenta l'implementazione del pattern.\\
+	
+	\subsection{\texttt{VideoInterface}}
+	Nel progetto non è stata considerata la componente audio e così facendo è stato ritenuto non essere necessario implementare le interfacce audio come oggetti staticamente differenti, ma sono state distinte attraverso degli attributi nella classe \texttt{VideoInterface}, nella quale è stato sovrascritto il metodo \textit{equals($\cdot$)} per controllare l'uguaglianza tra due oggetti. Si può comunque prevedere una ristrutturazione del codice nel senso della definizione e specifica delle interfacce video e audio con annesse le varie caratteristiche che portano.\\
+	
+	\subsection{\texttt{VideoStream} e gerarchia \texttt{VideoFrame}}
+	Infine è stato utilizzato il pattern \textbf{Composite} per rappresentare la struttura dei frame. I \texttt{VideoFrame} sono staticamente suddivisi tra \texttt{SimpleFrame} e \texttt{ComposedFrame}, dove i primi rappresentano un rettangolo e un vettore di byte il quale rappresenta il contenuto dei pixel del frame, mentre i frame composti sono la composizione su due dimensioni dei frame semplici (e di altri frame composti). I secondi rimandano la richiesta dell'ottenimento delle informazioni sui pixel ad un'interfaccia \texttt{FrameComposer} che ha il compito di creare, attraverso qualche specifico algoritmo, un array di byte che rappresenti le informazioni sui pixel della composizione.
+	
 	\section{Test}
 	Si presentano nel seguito una serie di note preliminari che sono generali per tutto l'elaborato:
 	\begin{itemize}\setlength\itemsep{-3pt}
 		\item I test sono stati scritti in forma non completamente estesa, ovvero inserendo più asserzioni all'interno di un unico JUnitTest per controllare la correttezza di un intero metodo del \textit{Software Under Test} (o \textit{SUT}) e non il singolo comportamento di questo. È stato ritenuto che la metodologia fosse accettabile dato il contesto, in quanto vengono comunque testati separatamente i metodi del SUT, permettendo l'identificazione dell'origine dei fallimenti, ma vengono tenuti uniti i test dei vari comportamenti del singolo metodo, limitando l'eccessiva produzione di micro-JUnitTest (che generalmente sarebbe da considerare la procedura corretta).
-		\item È stato deciso di non utilizzare \texttt{extractiong(String)} e \texttt{hasFieldOrPropriety(String)} (e affini), metodi di assertj, per testare lo stato di oggetti poiché questi, sebbene molto potenti, hanno il difetto di rompersi rinominando i campi, quindi venendo meno a uno dei principali utilizzi dei test.\footnote{Il metodo \texttt{org.assertj.core.api.Assertions.assertThat(.)} è deprecato solo per alcuni tipi dei parametri (si può notare dall'IDE che lo segnala contestualmente al comando di \texttt{import}). I metodi utilizzati nel progetto possiedono un nome equivalente a quello presentato ma una firma differente: questi non risultano deprecati (si può infatti notare che l'IDE non li barra direttamente nel codice). Si veda a proposito la \href{https://www.javadoc.io/doc/org.assertj/assertj-core/latest/org/assertj/core/api/Assertions.html}{documentazione del pacchetto}.}
-		\item È stato ritenuto che testare i metodi auto-generati dall'IDE, ovvero getters e setters ai quali non è stata aggiunta ulteriore logica, non fosse determinante e che aumentava inutilmente la dimensione dell'elaborato. La decisione è stata presa consapevolmente che in un contesto non accademico sarebbe stato preferibile implementarli comunque.
-		\item È stato preferito non testare forzatamente lo stato degli oggetti inserendo campi package-private a meno che la logica interna ai metodi non fosse particolarmente complessa per cui risultasse determinante la presenza dei test. Nei casi in cui erano presenti dei getters privi di logica sono stati utilizzati questi per testare lo stato dell'oggetto, altrimenti sono state eseguite asserzioni generiche che devono essere verificate indipendentemente dallo stato esatto dell'oggetto.
+		\item È stato deciso di non utilizzare \texttt{extractiong(String)} e \texttt{hasFieldOrPropriety(String)} (e affini), metodi di \texttt{assertj}, per testare lo stato di oggetti poiché questi, sebbene molto potenti, hanno il difetto di rompersi rinominando i campi, quindi vengono meno a uno dei principi dei test.\footnote{Il metodo \texttt{org.assertj.core.api.Assertions.assertThat(.)} è deprecato solo per alcuni tipi dei parametri (si può notare dall'IDE che lo segnala contestualmente al comando di \texttt{import}). I metodi utilizzati nel progetto possiedono un nome equivalente a quello presentato ma una firma differente: questi non risultano deprecati (si può infatti notare che l'IDE non li barra direttamente nel codice). Si veda a proposito la \href{https://www.javadoc.io/doc/org.assertj/assertj-core/3.26.0/org/assertj/core/api/Assertions.html}{documentazione della libreria \texttt{assertJ}}.}
+		\item È stato ritenuto che testare i metodi auto-generati dall'IDE, ovvero getters e setters ai quali non è stata aggiunta ulteriore logica, non fosse determinante e che aumentava inutilmente la dimensione dell'elaborato. Questa decisione è stata presa con la consapevolezza che, in un contesto non accademico, sarebbe stato preferibile implementarli comunque per verificare la correttezza dei metodi in futuro, nel caso in cui venisse aggiunta logica non testata.
+		\item Il motivo per cui sono presenti dei campi definiti package-private (visibili a \ref{fig:classdiagram} con simbolo \textbf{~}) è da far risalire all'utilizzo di questi campi all'interno dei test: nessun campo definito package-private è stato utilizzato direttamente all'interno delle classi del medesimo pacchetto, è stata sempre utilizzata l'interfaccia pubblica (public e protected) delle classi. 
 	\end{itemize}
+	
 	
 	
 	

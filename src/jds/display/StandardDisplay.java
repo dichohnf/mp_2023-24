@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
-import jds.ComunicationChannel;
+import jds.StreamChannel;
 import jds.display.interfaces.VideoInterface;
 import jds.display.mulfunction.MulfunctionChecker;
 import jds.exception.AbsentVideoInterfaceException;
@@ -16,7 +16,7 @@ public final class StandardDisplay implements Display {
 	
 	private final int maxNits;
 	private final List<String> supportedResolutions;
-	private final ComunicationChannel channel;
+	private final StreamChannel channel;
 	private final List<VideoInterface> supportedInterfaces;
 	int currentNits;
 	int colorTemperature;
@@ -26,7 +26,7 @@ public final class StandardDisplay implements Display {
 	
 	public StandardDisplay(int maxNits,
 			List<String> supportedResolutions,
-			ComunicationChannel channel,
+			StreamChannel channel,
 			List<VideoInterface> supportedInterfaces) {
 		
 		this.maxNits = checkedMaxNits(maxNits);
@@ -56,7 +56,7 @@ public final class StandardDisplay implements Display {
 		return supportedResolutions;
 	}
 
-	private ComunicationChannel checkedChannel(ComunicationChannel channel) {
+	private StreamChannel checkedChannel(StreamChannel channel) {
 		return Objects.requireNonNull(
 				channel, 
 				"Null channel argument");

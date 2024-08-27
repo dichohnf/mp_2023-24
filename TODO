@@ -1,1 +1,4 @@
-In VideoFrame si deve gestire l'inerimento delle posizione di origine. In composed si può creare un nuovo frame con x e y minimi come origine e massimi come opposto, e inserire i videoframe con le posizioni modificate. Si può chiamare nextFrame() del figlio ???
+Chiedere:
+    - frecce UML: ritorno metodi hanno una freccia?? È giusto?
+    - test dei decorator mancanti..!
+    - test -> inserire infiniti getters e setters package-private o lasciare gli argomenti package-private? (vedi chack-list: "Fate attenzione a specificare correttamente la visibilità dei vari membri. Ricordate che le variabili di istanza devono essere tutte private. Inoltre, i metodi devono essere pubblici solo se sono pensati peressere usati da “client” (cioè anche da vostro codice). Ricordate che se un metodo serve solo nei test NON deve essere reso pubblico (ma si deve usare il “package-private”). L’uso scorretto della visibilità sarà considerato un errore molto grave.")
