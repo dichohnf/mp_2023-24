@@ -31,6 +31,26 @@ citecolor= black,
 filecolor=magenta,
 urlcolor=cyan]{hyperref}
 
+% LISTATI
+\usepackage{listings}
+\lstset{
+	tabsize = 4, %% set tab space width
+	showstringspaces = false, %% prevent space marking in strings, string is defined as the text that is generally printed directly to the console
+	numbers = left, %% display line numbers on the left
+	commentstyle = \color{green}, %% set comment color
+	keywordstyle = \color{blue}, %% set keyword color
+	stringstyle = \color{red}, %% set string color
+	rulecolor = \color{black}, %% set frame color to avoid being affected by text color
+	basicstyle = \footnotesize \ttfamily , %% set listing font and size
+	breaklines = true, %% enable line breaking
+	numberstyle = \tiny,
+	language = Java, 
+	frame = trBL, 
+	firstnumber = last, 
+	escapeinside={(*@}{@*)},
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
 % METADATI RELAZIONE
 \author{Diciotti Matteo}
 \title{Relazione progetto AA 2023-2024 di\\ \textbf{Metodologie di Programmazione}}
@@ -83,13 +103,13 @@ urlcolor=cyan]{hyperref}
 		\item Decorator, versione con un'unica responsabilità;
 		\item Template Method;
 		\item Chain of Responsability;
-		\item Builder, versione priva di astrazione;
 		\item Composite, variante type safe.
 	\end{itemize}
 	\section{Descrizione scelte di design}
 	\subsection{Gerarchia \texttt{Display}, \texttt{Sensor} e \texttt{StreamChannel}}
 	Per l'implementazione di \texttt{Display} è stato utilizzato il pattern \textbf{Decorator}\footnote{Tutta la nomenclatura per la descrizione dei componenti dei pattern proviene dal manuale \textit{Design patterns: elements of reusable object-oriented}, {\fontfamily{bch}\selectfont G.O.F.}.} per l'aggiunta di un'unica responsabilità, ovvero la gestione di sensori. Il motivo primario che ha portato alla decisione di utilizzare il pattern è la grande varietà di sensori che possono essere associati ad un display, permettendo la creazione dinamica di innumerevoli display in base alle combinazioni di sensori.\\
 	L'oggetto da decorare, il \textit{ConcreteComponent}, risulta essere \texttt{StandardDisplay} mentre l'unico \textit{Decorator} risulta essere \texttt{DisplayWithSensorDecorator}.\\
+	I metodi decorati (in modo efficace sebbene abbastanza banale) sono \textit{displayStream()}, \textit{displayMenu()} e \textit{displayError(message)} ai quali viene aggiunta la richiesta di impostare preventivamente la miglior configurazione degli attributi del display in base ai valori ottenuti dal sensore presente (vedi metodo \textit{setBestConfiguration()}).\\
 	Il motivo per cui \texttt{DisplayWithSensorDecorator} è un'astrazione e le sottoclassi \texttt{DisplayWithBrightnessSensorDecorator} e \texttt{DisplayWithClockDecorator} non sono stati implementati come \textit{ConcreteDecorator} è la volontà di ridurre la duplicazione di codice, implementando direttamente le operazioni ereditate da \texttt{Display} nella classe base, e astraendo solo le operazioni strettamente dipendenti dai sensori, ovvero astraendo \textit{setValue()}. Cosi facendo viene riutilizzato il codice del decoratore per ogni tipologia di sensore. Attraverso l'uso quindi del pattern \textbf{Template Method} è stato possibile definire un algoritmo comune per il metodo \textit{setBestConfiguration()}, il template method, che richiamasse la funzione \textit{setValue()}, implementata dalle sottoclassi (unico metodo da implementare per creare un nuovo decoratore di tipo \texttt{DisplayWithSensorDecorator}).\\
 	Inoltre le classi presenti nel sistema che implementano \texttt{DisplayWithSensorDecorator} utilizzano nel metodo \textit{setValue()} dei valori di default predefiniti. Questa caratteristica è modificabile e deriva dal contesto, si può prevedere una comoda modifica che permetta la specificazione delle variabili in modo che il calcolo sia specifico per ogni sensore e per ogni display.\\
 	Infine, a proposito di \texttt{DisplayWithBrightnessSensorDecorator} e del metodo \textit{setValue()}, è stato implementato un semplice algoritmo di calcolo lineare, ma attraverso l'utilizzo del pattern \textbf{Strategy} (\underline{non} implementato) potevano essere create varie tipologie di algoritmo (lineare, logaritmico, ecc..) in modo che fosse possibile differenziare ulteriormente i display e i loro meccanismi di funzionamento specifici.\\
@@ -111,13 +131,19 @@ urlcolor=cyan]{hyperref}
 	
 	
 	\subsection{Gerarchia \texttt{MulfunctionChecker}}
-	Per il controllo dei malfunzionamenti è stato implementato il pattern \textbf{Chain of Responsibility}, al fine di poter aggiungere controlli dinamicamente e di poter personalizzare la catena in base allo specifico display. Il pattern ha come \textit{Handler} la classe \texttt{MulfunctionChecker} e le sottoclassi rappresentano i \textit{ConcreteHandler} che implementano gli specifici controlli da effettuare.\\
-	
-	\subsection{\texttt{Builder}}
-	Data la varietà delle tipologie di Display e data la grande quantità di argomenti che questi possiedono è stato ritenuto che l'implementazione del pattern \textbf{Builder}, sebbene nella versione senza astrazione, potesse rendere più agevole generazione di display, permettendone la creazione in modo fluido. La classe \texttt{DisplayBuilder} rappresenta l'implementazione del pattern.\\
+	Per il controllo dei malfunzionamenti dei display è stato implementato il pattern \textbf{Chain of Responsibility}, al fine di poter aggiungere controlli dinamicamente e di poter personalizzare la catena in base allo specifico display. Il pattern ha come \textit{Handler} la classe \texttt{MulfunctionChecker} e le sottoclassi rappresentano i \textit{ConcreteHandler} che implementano gli specifici controlli da effettuare.\\
+	Il controllo viene affidato da \textit{Display} a un oggetto di tipo \texttt{MulfunctionChecker} che non se ne occupa direttamente ma che trasmette la richiesta alle sottoclassi. Solo in caso di mancata gestione da parte di una sottoclasse viene chiamato in causa il codice della classe suddetta la quale passa la richiesta al successivo membro della catena oppure restituisce una stringa per specificare l'assenza di malfunzionamenti noti.\\
+		\begin{minipage}[c]{.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{diagramma/ClassDiagramm-MulfunctionChecker.pdf}
+		\captionof{figure}{Gerarchia Display.}
+		\label{fig:mulfunction}
+	\end{minipage}
 	
 	\subsection{\texttt{VideoInterface}}
-	Nel progetto non è stata considerata la componente audio e così facendo è stato ritenuto non essere necessario implementare le interfacce audio come oggetti staticamente differenti, ma sono state distinte attraverso degli attributi nella classe \texttt{VideoInterface}, nella quale è stato sovrascritto il metodo \textit{equals($\cdot$)} per controllare l'uguaglianza tra due oggetti. Si può comunque prevedere una ristrutturazione del codice nel senso della definizione e specifica delle interfacce video e audio con annesse le varie caratteristiche che portano.\\
+	Nel progetto non è stata considerata la componente audio e così facendo è stato ritenuto non essere necessario implementare le interfacce video come oggetti staticamente differenti nel sistema, ma sono state distinte attraverso degli attributi nella classe \texttt{VideoInterface}, nella quale è stato sovrascritto il metodo \textit{equals($\cdot$)} per controllare l'uguaglianza tra due oggetti. Si può comunque prevedere una ristrutturazione del codice nel senso della definizione e specifica delle interfacce video e audio con annesse le varie caratteristiche che possiedono.\\
+	\lstinputlisting[firstline=8, captionpos=b, caption={Implementazione classe VideoInterface}]{../src/jds/display/interfaces/VideoInterface.java}
+
 	
 	\subsection{\texttt{VideoStream} e gerarchia \texttt{VideoFrame}}
 	Infine è stato utilizzato il pattern \textbf{Composite} per rappresentare la struttura dei frame. I \texttt{VideoFrame} sono staticamente suddivisi tra \texttt{SimpleFrame} e \texttt{ComposedFrame}, dove i primi rappresentano un rettangolo e un vettore di byte il quale rappresenta il contenuto dei pixel del frame, mentre i frame composti sono la composizione su due dimensioni dei frame semplici (e di altri frame composti). I secondi rimandano la richiesta dell'ottenimento delle informazioni sui pixel ad un'interfaccia \texttt{FrameComposer} che ha il compito di creare, attraverso qualche specifico algoritmo, un array di byte che rappresenti le informazioni sui pixel della composizione.
