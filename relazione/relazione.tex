@@ -36,6 +36,7 @@ urlcolor=cyan]{hyperref}
 
 % LISTATI
 \usepackage{listings}
+\usepackage{lstautogobble}
 \lstset{
 	backgroundcolor=\color{Snow2},
 	tabsize = 4, %% set tab space width
@@ -54,6 +55,7 @@ urlcolor=cyan]{hyperref}
 	firstnumber = 1, 
 	escapeinside={(*@}{@*)},
 	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	columns=fullflexible
 }
 
 % METADATI RELAZIONE
@@ -176,12 +178,16 @@ urlcolor=cyan]{hyperref}
 	\lstinputlisting[firstline=43, lastline=59, captionpos=b, caption={Test per la classe \texttt{UnexpectedlyChangedResolutionCheckerTest}.}, label=lst:test-changed-resolution]{../tests/jds/display/mulfunction/UnexpectedlyChangedResolutionCheckerTest.java}
 	
 	\subsection{\texttt{VideoInterface}}
+	Nella classe \texttt{VideoInterface} è stato testato il corretto funzionamento dei metodi utilizzando le medesime tecniche utilizzate per le classi precedenti. In particolare sono stati testati i metodi \textit{equals($\cdot$)}, \textit{hashCode()} e \textit{toString()} secondo quanto atteso in letteratura (\textit{equals} risultante \textcolor{violet}{false} in caso di other assegnato a \textcolor{violet}{null}, \textit{hashCode} uguale per elementi uguali, eccetera).
+	\lstinputlisting[firstline=43, lastline=60, captionpos=b, caption={Test del metodo \textit{equals(other)} per la classe \texttt{VideoInterface}.}, label=lst:test-videointerface-equals]{../tests/jds/display/interfaces/VideoInterfaceTest.java}
 	
-	 
+	\subsection{\texttt{VideoStream} e gerarchia \texttt{VideoFrame}}
+	Una volta testata la classe \texttt{Position} con tecniche non dissimili da quelle precedentemente utilizzate, testando per ogni metodo che il risultato atteso sia coerente con quello ottenuto, si eseguono i test per \texttt{SimpleFrame}, ovvero si testa quel minimo di logica dei setters.
+	Si è testata successivamente la classe \texttt{ComposedFrame}, utilizzando la classe \texttt{MockFrameCompositor}. Dato che si tratta di un \textbf{Composite} si testa che il metodo \textit{getData()}, operazione astratta della classe base, sia passata dal \textit{Composite} ai figli, e che quindi, in questo caso per come è stata implementata la classe \texttt{MockFrameCompositor}, che il risultato ottenuto contenga tutte le istanze dei dati dei figli.
+	\lstinputlisting[firstline=60, lastline=68, captionpos=b, caption={Test del metodo \textit{getData()} per la classe \texttt{ComposedFrame}.}, label=lst:test-composedframe-getdata]{../tests/jds/videostream/ComposedFrameTest.java}
 	
-	
-	
-	
+	Infine è stata testata la classe \texttt{VideoStream} affinché fosse evidente che il metodo \textit{nextFrame()} restituisse sempre il corretto frame.
+	\lstinputlisting[firstline=53, lastline=64, captionpos=b, caption={Test del metodo \textit{nextFrame()} per la classe \texttt{VideoStream}.}, label=lst:test-videostream-nextframe]{../tests/jds/videostream/VideoStreamTest.java}
 	
 \end{document}
 

@@ -21,7 +21,7 @@ public class VideoInterfaceTest {
 		name	= "VGA";
 		version	= "HD 720";
 		channel = new MockStreamChannel();
-		inter = new VideoInterface(name, version, channel);
+		inter 	= new VideoInterface(name, version, channel);
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class VideoInterfaceTest {
 	
 	@Test
 	public void testEquals() {
-		StreamChannel secondChannel = new MockStreamChannel();
+		StreamChannel secondChannel	 = new MockStreamChannel();
 		VideoInterface equalInter	 = new VideoInterface(name, version, channel);
 		VideoInterface diffName		 = new VideoInterface("HDMI", version, channel);
 		VideoInterface diffVersion	 = new VideoInterface(name, "SXGA", channel);
@@ -61,7 +61,7 @@ public class VideoInterfaceTest {
 	
 	@Test
 	public void testHashCode() {
-		StreamChannel secondChannel = new MockStreamChannel();
+		StreamChannel secondChannel	 = new MockStreamChannel();
 		VideoInterface equalInter	 = new VideoInterface(name, version, channel);
 		VideoInterface diffName		 = new VideoInterface("HDMI", version, channel);
 		VideoInterface diffVersion	 = new VideoInterface(name, "SXGA", channel);

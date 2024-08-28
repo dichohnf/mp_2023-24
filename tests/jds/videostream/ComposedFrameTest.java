@@ -12,12 +12,16 @@ public class ComposedFrameTest {
 	
 	Position bottomLeft1;
 	Position bottomLeft2;
+	Position bottomLeft3;
 	Position topRight1;
 	Position topRight2;
+	Position topRight3;
 	byte[] data1;
 	byte[] data2;
+	byte[] data3;
 	VideoFrame simple1;
 	VideoFrame simple2;
+	VideoFrame simple3;
 	ComposedFrame composed1;
 	ComposedFrame composed2;
 	
@@ -25,15 +29,20 @@ public class ComposedFrameTest {
 	public void setUp() {
 		bottomLeft1	= new Position(0,0);
 		bottomLeft2	= new Position(1,2);
+		bottomLeft3	= new Position(4,5);
 		topRight1	= new Position(1366, 768);
 		topRight2	= new Position(1567, 1314);
+		topRight3	= new Position(2133, 4212);
 		data1 		= "Bytes string.".getBytes();
-		data2 		= "Bytes string copy.".getBytes();
+		data2 		= "Another string!".getBytes();
+		data3 		= "Last string?".getBytes();
 		simple1 	= new SimpleFrame(bottomLeft1, topRight1, data1);
 		simple2 	= new SimpleFrame(bottomLeft2, topRight2, data2);
+		simple3 	= new SimpleFrame(bottomLeft3, topRight3, data3);
 		composed1 	= new ComposedFrame(new MockFrameCompositor());
 		composed2	= new ComposedFrame(new MockFrameCompositor());
-		composed2.children.addAll(List.of(simple1, simple2, composed1));
+		composed1.children.add(simple1);
+		composed2.children.addAll(List.of(simple2, simple3, composed1));
 		composed2.calculationRelevantPositions();
  	}
 	
@@ -51,18 +60,19 @@ public class ComposedFrameTest {
 	@Test
 	public void testGetData() {
 		assertThat(composed1.getData())
-			.isEmpty();
+			.contains(data1);
 		assertThat(composed2.getData())
 			.contains(data1)
-			.contains(data2);
+			.contains(data2)
+			.contains(data3);
 	}
 
 	@Test
 	public void testAdd() {
-		addAndSizeCheck(composed1, simple1,	 1);
 		addAndSizeCheck(composed1, simple1,	 2);
-		addAndSizeCheck(composed1, simple2,	 3);
-		addAndSizeCheck(composed1, composed2, 4);
+		addAndSizeCheck(composed1, simple1,	 3);
+		addAndSizeCheck(composed1, simple2,	 4);
+		addAndSizeCheck(composed1, composed2, 5);
 		assertThatThrownBy(
 				() -> composed1.add(composed1))
 			.isInstanceOf(IllegalArgumentException.class)
@@ -79,12 +89,12 @@ public class ComposedFrameTest {
 
 	@Test
 	public void testRemove() {
-		sizeCheckAndRemove(composed2, 3, simple1);
+		sizeCheckAndRemove(composed2, 3, simple2);
 		assertThat(composed2.children)
 			.hasSize(2);
-		assertThat(composed2.remove(simple1))
+		assertThat(composed2.remove(simple2))
 			.isFalse();
-		sizeCheckAndRemove(composed2, 2, simple2);
+		sizeCheckAndRemove(composed2, 2, simple3);
 		sizeCheckAndRemove(composed2, 1, composed1);
 		assertThat(composed2.children)
 			.isNotNull()

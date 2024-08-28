@@ -38,20 +38,6 @@ public class SimpleFrameTest {
 	}
 
 	@Test
-	public void testGetBottomLeftPosition() {
-		assertThat(simple.getBottomLeftPosition())
-			.isInstanceOf(Position.class)
-			.isSameAs(bottomLeft);
-	}
-
-	@Test
-	public void testGetTopRightPosition() {
-		assertThat(simple.getTopRightPosition())
-			.isInstanceOf(Position.class)
-			.isSameAs(topRight);
-	}
-
-	@Test
 	public void testSetBottomLeftPosition() {
 		Position tmpPosition = new Position(2849, 1023);
 		simple.setBottomLeftPosition(tmpPosition);

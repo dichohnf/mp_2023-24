@@ -40,7 +40,7 @@ public class VideoStreamTest {
 	}
 
 	@Test
-	public void testSimpleStream() {
+	public void testVideoStream() {
 		assertThatThrownBy(
 				() -> new VideoStream(null))
 			.isInstanceOf(NullPointerException.class)
