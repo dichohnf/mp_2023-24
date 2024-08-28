@@ -24,6 +24,9 @@
 % DIDASCALIE
 \usepackage[labelfont={bf, small}, textfont=small]{caption}
 
+% COLORI
+\usepackage[x11names]{xcolor}
+
 % RIFERIMENTI IPERTESTUALI
 \usepackage[colorlinks=true,
 linkcolor=black,
@@ -34,19 +37,21 @@ urlcolor=cyan]{hyperref}
 % LISTATI
 \usepackage{listings}
 \lstset{
+	backgroundcolor=\color{Snow2},
 	tabsize = 4, %% set tab space width
 	showstringspaces = false, %% prevent space marking in strings, string is defined as the text that is generally printed directly to the console
 	numbers = left, %% display line numbers on the left
+	numberstyle= \color{orange},
 	commentstyle = \color{green}, %% set comment color
-	keywordstyle = \color{blue}, %% set keyword color
-	stringstyle = \color{red}, %% set string color
+	keywordstyle = \color{violet}, %% set keyword color
+	stringstyle = \color{SpringGreen4}, %% set string color
 	rulecolor = \color{black}, %% set frame color to avoid being affected by text color
 	basicstyle = \footnotesize \ttfamily , %% set listing font and size
 	breaklines = true, %% enable line breaking
 	numberstyle = \tiny,
 	language = Java, 
-	frame = trBL, 
-	firstnumber = last, 
+	frame = bl, 
+	firstnumber = 1, 
 	escapeinside={(*@}{@*)},
 	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 }
@@ -110,43 +115,42 @@ urlcolor=cyan]{hyperref}
 	Per l'implementazione di \texttt{Display} è stato utilizzato il pattern \textbf{Decorator}\footnote{Tutta la nomenclatura per la descrizione dei componenti dei pattern proviene dal manuale \textit{Design patterns: elements of reusable object-oriented}, {\fontfamily{bch}\selectfont G.O.F.}.} per l'aggiunta di un'unica responsabilità, ovvero la gestione di sensori. Il motivo primario che ha portato alla decisione di utilizzare il pattern è la grande varietà di sensori che possono essere associati ad un display, permettendo la creazione dinamica di innumerevoli display in base alle combinazioni di sensori.\\
 	L'oggetto da decorare, il \textit{ConcreteComponent}, risulta essere \texttt{StandardDisplay} mentre l'unico \textit{Decorator} risulta essere \texttt{DisplayWithSensorDecorator}.\\
 	I metodi decorati (in modo efficace sebbene abbastanza banale) sono \textit{displayStream()}, \textit{displayMenu()} e \textit{displayError(message)} ai quali viene aggiunta la richiesta di impostare preventivamente la miglior configurazione degli attributi del display in base ai valori ottenuti dal sensore presente (vedi metodo \textit{setBestConfiguration()}).\\
-	Il motivo per cui \texttt{DisplayWithSensorDecorator} è un'astrazione e le sottoclassi \texttt{DisplayWithBrightnessSensorDecorator} e \texttt{DisplayWithClockDecorator} non sono stati implementati come \textit{ConcreteDecorator} è la volontà di ridurre la duplicazione di codice, implementando direttamente le operazioni ereditate da \texttt{Display} nella classe base, e astraendo solo le operazioni strettamente dipendenti dai sensori, ovvero astraendo \textit{setValue()}. Cosi facendo viene riutilizzato il codice del decoratore per ogni tipologia di sensore. Attraverso l'uso quindi del pattern \textbf{Template Method} è stato possibile definire un algoritmo comune per il metodo \textit{setBestConfiguration()}, il template method, che richiamasse la funzione \textit{setValue()}, implementata dalle sottoclassi (unico metodo da implementare per creare un nuovo decoratore di tipo \texttt{DisplayWithSensorDecorator}).\\
-	Inoltre le classi presenti nel sistema che implementano \texttt{DisplayWithSensorDecorator} utilizzano nel metodo \textit{setValue()} dei valori di default predefiniti. Questa caratteristica è modificabile e deriva dal contesto, si può prevedere una comoda modifica che permetta la specificazione delle variabili in modo che il calcolo sia specifico per ogni sensore e per ogni display.\\
-	Infine, a proposito di \texttt{DisplayWithBrightnessSensorDecorator} e del metodo \textit{setValue()}, è stato implementato un semplice algoritmo di calcolo lineare, ma attraverso l'utilizzo del pattern \textbf{Strategy} (\underline{non} implementato) potevano essere create varie tipologie di algoritmo (lineare, logaritmico, ecc..) in modo che fosse possibile differenziare ulteriormente i display e i loro meccanismi di funzionamento specifici.\\
+	Il motivo per cui \texttt{DisplayWithSensorDecorator} è un'astrazione e le sottoclassi \texttt{DisplayWithBrightnessSensorDecorator} e \texttt{DisplayWithClockDecorator} non sono state implementate come \textit{ConcreteDecorator} è la volontà di ridurre la duplicazione di codice, implementando direttamente le operazioni ereditate da \texttt{Display} nella classe base e astraendo solo le operazioni strettamente dipendenti dai sensori, ovvero astraendo \textit{setValue()}. Così facendo viene riutilizzato il codice del decoratore per ogni tipologia di sensore. Attraverso l'uso del pattern \textbf{Template Method} è stato possibile definire un algoritmo comune per il metodo \textit{setBestConfiguration()}, il template method (definito \textcolor{violet}{\texttt{final}} nella classe astratta), che richiamasse la funzione \textit{setValue()}, implementata dalle sottoclassi (unico metodo da implementare per creare una classe di tipo \texttt{DisplayWithSensorDecorator} e quindi per aggiungere un nuovo tipo di sensore al dispositivo).\\
+	Inoltre le classi presenti nel sistema che implementano \texttt{DisplayWithSensorDecorator} utilizzano nel metodo \textit{setValue()} dei valori di default predefiniti. Questa caratteristica è modificabile e deriva dal contesto, si può prevedere una comoda modifica che permetta la specificazione delle variabili in modo che il calcolo sia caratteristico per ogni sensore e per ogni display.\\
+	Infine, a proposito di \texttt{DisplayWithBrightnessSensorDecorator} e del metodo \textit{setValue()}, è stato implementato un semplice algoritmo di calcolo lineare, ma attraverso l'utilizzo del pattern \textbf{Strategy} (\underline{non} implementato) potevano essere create varie tipologie di algoritmo (lineare, logaritmico, ecc..) in modo che fosse possibile differenziare ulteriormente i display e i loro meccanismi di funzionamento.\\
 	Non avendo implementato un meccanismo di logging, il metodo \textit{DisplayWithSensorDecorator.setBestConfiguration()} (così come i metodi \textit{MulfunctionChecker.checkMulfunction($\cdot$)} che vedremo in seguito) al momento stampa le eccezioni pervenute dai sensori sulla console. Si prevede una modifica del codice nel senso della creazione di un report complessivo del sistema, ma che risultava non utile al fine del progetto.\\
 	Infine, sempre dettata dal contesto in cui si inserisce l'elaborato, è stata utilizzata una semplificazione per la proiezione dei frame sul display, ovvero vengono passati flussi o comandi all'interfaccia \texttt{StreamChannel}, la quale poi avrà il compito di gestire le richieste.\\
-	\begin{minipage}[c]{.5\textwidth}
+	\begin{minipage}[c]{\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{diagramma/ClassDiagramm-DisplayHierarchy.pdf}
-		\captionof{figure}{Gerarchia Display.}
+		\includegraphics[width=.5\textwidth]{diagramma/ClassDiagramm-DisplayHierarchy.pdf}
+		\captionof{figure}{Gerarchia \texttt{Display}.}
 		\label{fig:display}
-	\end{minipage}
-%	\hfill
-%	\begin{minipage}[c]{.5\textwidth}
-%		
-%	\end{minipage}
-
-	
-
-	
+	\end{minipage}	
 	
 	\subsection{Gerarchia \texttt{MulfunctionChecker}}
 	Per il controllo dei malfunzionamenti dei display è stato implementato il pattern \textbf{Chain of Responsibility}, al fine di poter aggiungere controlli dinamicamente e di poter personalizzare la catena in base allo specifico display. Il pattern ha come \textit{Handler} la classe \texttt{MulfunctionChecker} e le sottoclassi rappresentano i \textit{ConcreteHandler} che implementano gli specifici controlli da effettuare.\\
-	Il controllo viene affidato da \textit{Display} a un oggetto di tipo \texttt{MulfunctionChecker} che non se ne occupa direttamente ma che trasmette la richiesta alle sottoclassi. Solo in caso di mancata gestione da parte di una sottoclasse viene chiamato in causa il codice della classe suddetta la quale passa la richiesta al successivo membro della catena oppure restituisce una stringa per specificare l'assenza di malfunzionamenti noti.\\
-		\begin{minipage}[c]{.5\textwidth}
+	L'accertamento viene affidato da \textit{Display} a un oggetto di tipo \texttt{MulfunctionChecker} che non se ne occupa direttamente ma che trasmette la richiesta alle sottoclassi. Solo in caso di mancata gestione da parte di una sottoclasse viene chiamato in causa il codice della classe suddetta la quale passa la richiesta al successivo membro della catena oppure restituisce una stringa per specificare l'assenza di malfunzionamenti noti.\\
+	\begin{minipage}[c]{\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{diagramma/ClassDiagramm-MulfunctionChecker.pdf}
-		\captionof{figure}{Gerarchia Display.}
+		\includegraphics[width=.5\textwidth]{diagramma/ClassDiagramm-MulfunctionChecker.pdf}
+		\captionof{figure}{Gerarchia \texttt{MulfunctionChecker}.}
 		\label{fig:mulfunction}
 	\end{minipage}
 	
 	\subsection{\texttt{VideoInterface}}
 	Nel progetto non è stata considerata la componente audio e così facendo è stato ritenuto non essere necessario implementare le interfacce video come oggetti staticamente differenti nel sistema, ma sono state distinte attraverso degli attributi nella classe \texttt{VideoInterface}, nella quale è stato sovrascritto il metodo \textit{equals($\cdot$)} per controllare l'uguaglianza tra due oggetti. Si può comunque prevedere una ristrutturazione del codice nel senso della definizione e specifica delle interfacce video e audio con annesse le varie caratteristiche che possiedono.\\
-	\lstinputlisting[firstline=8, captionpos=b, caption={Implementazione classe VideoInterface}]{../src/jds/display/interfaces/VideoInterface.java}
+	\lstinputlisting[firstline=8, lastline=25, captionpos=b, caption={Campi e costruttore della classe \texttt{VideoInterface}.}, label=lst:videointerface]{../src/jds/display/interfaces/VideoInterface.java}
 
 	
 	\subsection{\texttt{VideoStream} e gerarchia \texttt{VideoFrame}}
-	Infine è stato utilizzato il pattern \textbf{Composite} per rappresentare la struttura dei frame. I \texttt{VideoFrame} sono staticamente suddivisi tra \texttt{SimpleFrame} e \texttt{ComposedFrame}, dove i primi rappresentano un rettangolo e un vettore di byte il quale rappresenta il contenuto dei pixel del frame, mentre i frame composti sono la composizione su due dimensioni dei frame semplici (e di altri frame composti). I secondi rimandano la richiesta dell'ottenimento delle informazioni sui pixel ad un'interfaccia \texttt{FrameComposer} che ha il compito di creare, attraverso qualche specifico algoritmo, un array di byte che rappresenti le informazioni sui pixel della composizione.
+	Infine, è stato utilizzato il pattern \textbf{Composite} per rappresentare la struttura dei frame di uno stream video. \textit{StreamVideo} possiede un riferimento ad un iteratore di \texttt{VideoFrame} i quali possono restituire le informazioni sui pixel in forma di vettore di byte. I \texttt{VideoFrame} sono staticamente suddivisi tra \texttt{SimpleFrame} e \texttt{ComposedFrame}, dove i primi contengono un vettore di byte il quale rappresenta il contenuto dei pixel del frame, mentre i frame composti sono la composizione su due dimensioni dei frame semplici (e di altri frame composti). La classe \texttt{SimpleFrame} rappresenta l'unica classe \textit{Leaf} del pattern Composite, mentre la classe \texttt{ComposedFrame} rappresenta la classe \textit{Composite}. Il supertipo comune, che in questa struttura rappresenta \textit{Component} del pattern, è l'interfaccia \texttt{VideoFrame}. 
+	Come prevede il pattern, I \texttt{ComposedFrame} rimandano la richiesta dell'ottenimento delle informazioni sui pixel ad un'interfaccia \texttt{FrameComposer} che ha il compito di creare, attraverso qualche specifico algoritmo, un array di byte che rappresenti le informazioni sui pixel della composizione, i quali byte sono ottenuti dalla medesima operazione \textit{getData()} sui figli.
+	\begin{minipage}[c]{\textwidth}
+		\centering
+		\includegraphics[width=.5\textwidth]{diagramma/ClassDiagramm-VideoStream.pdf}
+		\captionof{figure}{\texttt{VideoStream} e gerarchia \texttt{VideoFrame}.}
+		\label{fig:videostream}
+	\end{minipage}
 	
 	\section{Test}
 	Si presentano nel seguito una serie di note preliminari che sono generali per tutto l'elaborato:
@@ -156,6 +160,25 @@ urlcolor=cyan]{hyperref}
 		\item È stato ritenuto che testare i metodi auto-generati dall'IDE, ovvero getters e setters ai quali non è stata aggiunta ulteriore logica, non fosse determinante e che aumentava inutilmente la dimensione dell'elaborato. Questa decisione è stata presa con la consapevolezza che, in un contesto non accademico, sarebbe stato preferibile implementarli comunque per verificare la correttezza dei metodi in futuro, nel caso in cui venisse aggiunta logica non testata.
 		\item Il motivo per cui sono presenti dei campi definiti package-private (visibili a \ref{fig:classdiagram} con simbolo \textbf{~}) è da far risalire all'utilizzo di questi campi all'interno dei test: nessun campo definito package-private è stato utilizzato direttamente all'interno delle classi del medesimo pacchetto, è stata sempre utilizzata l'interfaccia pubblica (public e protected) delle classi. 
 	\end{itemize}
+	
+	Per testare il progetto sono state implementate all'interno della cartella sorgente \textit{tests} le classi fittizie \texttt{jds.MockStreamChannel} e \texttt{jds.videostream.MockFrameCompositor}, servizi non implementati del sistema, e la classe \texttt{DisplaySetterToTestMulfunctions} che occorre in alcune classi di test per settare direttamente alcuni campi di display in test fuori dal pacchetto in cui risiede la classe \texttt{StandardDisplay}.
+	
+	\subsection{Gerarchia \texttt{Display}}
+	Per testare la gerarchia Display è necessario testare i pattern \textbf{Decorator} e \textbf{Template Method}.
+	Si è testato innanzitutto la classe \texttt{StandardDisplay}, ovvero il componente da decorare, attraverso test che, per ogni metodo, valutassero il corretto funzionamento del metodo, sia per il lancio di eccezioni (attraverso il metodo \textit{assertThatThrownBy($\cdot$)} e l'utilizzo di lambda) che per il corretto svolgimento delle operazioni attese. Impostando alcuni argomenti della classe package-private è stato possibile settare direttamente i valori senza utilizzare altri metodi della classe, in modo da cercare di isolare il comportamento il più possibile.\\
+	In secondo luogo si è passati a testare la classe \texttt{DisplayWithSensorDecorator}, in particolare lo si è fatto all'interno delle classi di test relative alle sottoclassi che la implementano: \texttt{DisplayWithBrightnessSensorDecoratorTest} e \texttt{DisplayWithClockDecoratorTest}.
+	Per creare delle implementazioni di \texttt{Sensor}, invece di produrre classi aggiuntive, dato che \texttt{Sensor<T>} è un'interfaccia funzionale, sono state assegnate delle lambda expressions con cast a sensori.\\
+	In queste classi e stato testato su una catena di 2 decoratori (differenti) e un componente che il comportamento dei metodi decorati ovvero \textit{displayStream()}, \textit{displayMenu()} e \textit{displayError(message)}, modificasse lo stato dell'oggetto \texttt{component} alla base della "catena" di decoratori e che poi passasse la richiesta. Per tutti gli altri metodi è stato testato che venisse passata la richiesta al \texttt{component} senza svolgere altre operazioni (e che quindi le eccezioni lanciate fossero uguali o che il risultato di un metodo fosse uguale al risultato del metodo chiamato sul \texttt{component}).
+	Sono state inoltre testate le due implementazioni del metodo \textit{setValue()} per testare la correttezza del pattrern template method, oltre ovviamente al metodo \textit{setBestConfiguration()}.
+	
+	\subsection{Gerarchia \texttt{MulfunctionChecker}}
+	Per testare che il pattern \textbf{Chain of Responsability} abbia il corretto funzionamento si controlla nelle classi di test \texttt{UnexpectedlyChangedResolutionCheckerTest} e \texttt{UnexpectedlyDisconnectedInterfaceCheckerTest} che, se la classe che deve gestire la richiesta e attualmente non può/sa farlo allora passa la richiesta al successivo \textit{Concretehandler}, altrimenti si controlla che restituisca il valore atteso.
+	\lstinputlisting[firstline=43, lastline=59, captionpos=b, caption={Test per la classe \texttt{UnexpectedlyChangedResolutionCheckerTest}.}, label=lst:test-changed-resolution]{../tests/jds/display/mulfunction/UnexpectedlyChangedResolutionCheckerTest.java}
+	
+	\subsection{\texttt{VideoInterface}}
+	
+	 
+	
 	
 	
 	

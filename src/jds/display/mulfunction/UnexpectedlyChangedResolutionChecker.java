@@ -4,7 +4,7 @@ import jds.display.Display;
 
 public final class UnexpectedlyChangedResolutionChecker extends MulfunctionChecker {
 
-	protected UnexpectedlyChangedResolutionChecker(MulfunctionChecker nextChecker) {
+	public UnexpectedlyChangedResolutionChecker(MulfunctionChecker nextChecker) {
 		super(nextChecker);
 	}
 

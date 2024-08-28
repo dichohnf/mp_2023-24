@@ -10,11 +10,11 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
-import jds.StreamChannel;
 import jds.MockStreamChannel;
+import jds.StreamChannel;
 import jds.display.interfaces.VideoInterface;
-import jds.display.mulfunction.MockMulfunctionChecker;
 import jds.display.mulfunction.MulfunctionChecker;
+import jds.display.mulfunction.UnexpectedlyChangedResolutionChecker;
 import jds.exception.AbsentVideoInterfaceException;
 
 public class StandardDisplayTest {
@@ -49,48 +49,56 @@ public class StandardDisplayTest {
 		assertThat(display)
 			.isInstanceOf(Display.class)
 			.hasNoNullFieldsOrProperties();
-		assertThat(((StandardDisplay)display).currentNits).isEqualTo(300);
+		assertThat(((StandardDisplay)display).currentNits)
+			.isEqualTo(300);
 	}
 
 	private void negativeNitsExceptionCheck() {
-		assertThatThrownBy(() -> new StandardDisplay(-1, supportedResolutions, displayChannel, supportedInterfaces))
+		assertThatThrownBy(
+				() -> new StandardDisplay(-1, supportedResolutions, displayChannel, supportedInterfaces))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("Negative maxNits argument");
 	}
 	
 	private void nullSupportedResolutionExceptionCheck() {
-		assertThatThrownBy(() -> new StandardDisplay(maxNits, null, displayChannel, supportedInterfaces))
+		assertThatThrownBy(
+				() -> new StandardDisplay(maxNits, null, displayChannel, supportedInterfaces))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("Null supportedResolution argument");
 	}
 
 	private void emptySupportedResolutionExceptionCheck() {
-		assertThatThrownBy(() -> new StandardDisplay(maxNits, List.of(), displayChannel, supportedInterfaces))
+		assertThatThrownBy(
+				() -> new StandardDisplay(maxNits, List.of(), displayChannel, supportedInterfaces))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("Empty supportedResolution argument");
 	}
 	
 	private void nullChannelExceptionCheck() {
-		assertThatThrownBy(() -> new StandardDisplay(maxNits, supportedResolutions, null, supportedInterfaces))
+		assertThatThrownBy(
+				() -> new StandardDisplay(maxNits, supportedResolutions, null, supportedInterfaces))
 		.isInstanceOf(NullPointerException.class)
 		.hasMessage("Null channel argument");
 	}
 
 	private void nullSupportedInterfacesExceptionCheck() {
-		assertThatThrownBy(() -> new StandardDisplay(maxNits, supportedResolutions, displayChannel, null))
+		assertThatThrownBy(
+				() -> new StandardDisplay(maxNits, supportedResolutions, displayChannel, null))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("Null supportedInterfaces argument");
 	}
 
 	private void emptySupportedInterfacesExceptionCheck() {
-		assertThatThrownBy(() -> new StandardDisplay(maxNits, supportedResolutions, displayChannel, List.of()))
+		assertThatThrownBy(
+				() -> new StandardDisplay(maxNits, supportedResolutions, displayChannel, List.of()))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("Empty supportedInterfaces argument");
 	}
 	
 	@Test
 	public void testDisplayStream() {
-		assertThatThrownBy(() -> display.displayStream())
+		assertThatThrownBy(
+				() -> display.displayStream())
 			.isInstanceOf(NoSuchElementException.class)
 			.hasMessage("Not selected interface");
 		((StandardDisplay)display).connectedInterfaces.add(videoInterface);
@@ -126,10 +134,12 @@ public class StandardDisplayTest {
 
 	@Test
 	public void testSetBrightness() {
-		assertThatThrownBy(() -> display.setBrightness(-0.1))
+		assertThatThrownBy(
+				() -> display.setBrightness(-0.1))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("Brightness value not acceptable: Defined from 0 to 1");
-		assertThatThrownBy(() -> display.setBrightness(5))
+		assertThatThrownBy(
+				() -> display.setBrightness(5))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("Brightness value not acceptable: Defined from 0 to 1");
 		display.setBrightness(0.8);
@@ -145,10 +155,12 @@ public class StandardDisplayTest {
 
 	@Test
 	public void testSetColorTemperature() {
-        assertThatThrownBy(() -> display.setColorTemperature(-1))
+        assertThatThrownBy(
+        		() -> display.setColorTemperature(-1))
         	.isInstanceOf(IllegalArgumentException.class)
         	.hasMessage("Not acceptable colorTemperature argument: must be between 0 and 10");
-        assertThatThrownBy(() -> display.setColorTemperature(11))
+        assertThatThrownBy(
+        		() -> display.setColorTemperature(11))
         	.isInstanceOf(IllegalArgumentException.class)
         	.hasMessage("Not acceptable colorTemperature argument: must be between 0 and 10");
         display.setColorTemperature(9);
@@ -158,14 +170,16 @@ public class StandardDisplayTest {
 
 	@Test
 	public void testSetResolution() {
-		assertThatThrownBy(() -> display.setResolution(null))
+		assertThatThrownBy(
+				() -> display.setResolution(null))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("Null resolution argument");
-		assertThatThrownBy(() -> display.setResolution("1440p"))
+		assertThatThrownBy(
+				() -> display.setResolution("1440p"))
         	.isInstanceOf(IllegalArgumentException.class)
         	.hasMessage("Selected resolution is not supported");
         assertThat(((StandardDisplay)display).resolution)
-    	.isEqualTo("1366x768");
+    		.isEqualTo("1366x768");
         display.setResolution("720p");
         assertThat(((StandardDisplay)display).resolution)
         	.isEqualTo("720p");
@@ -206,7 +220,8 @@ public class StandardDisplayTest {
 
 	@Test
 	public void testSelectInputInterface() throws AbsentVideoInterfaceException {
-		assertThatThrownBy(() -> display.selectInputInterface(videoInterface))
+		assertThatThrownBy(
+				() -> display.selectInputInterface(videoInterface))
 			.isInstanceOf(AbsentVideoInterfaceException.class)
 			.hasMessage("Selected interface is not conneted");
 		((StandardDisplay)display).connectedInterfaces.add(videoInterface);
@@ -228,7 +243,7 @@ public class StandardDisplayTest {
 
 	@Test
 	public void testMulfunctionTest() {
-		MulfunctionChecker checker = new MockMulfunctionChecker(null);
+		MulfunctionChecker checker = new UnexpectedlyChangedResolutionChecker(null);
 		assertThat(display.mulfunctionTest(checker))
 			.isEqualTo("No mulfunction detected");
 	}

@@ -14,6 +14,11 @@ import jds.exception.AbsentVideoInterfaceException;
 
 public final class StandardDisplay implements Display {
 	
+	private static final int MIN_BRIGHTNESS = 0;
+	private static final int MAX_BRIGHTNESS = 1;
+	private static final int MIN_COLOR_TEMPERATURE = 0;
+	private static final int MAX_COLOR_TEMPERATURE = 10;
+	
 	private final int maxNits;
 	private final List<String> supportedResolutions;
 	private final StreamChannel channel;
@@ -96,7 +101,7 @@ public final class StandardDisplay implements Display {
 			
 	@Override
 	public void setBrightness(double newBrightness){
-		if(newBrightness < 0 || newBrightness > 1)
+		if(newBrightness < MIN_BRIGHTNESS || newBrightness > MAX_BRIGHTNESS)
 			throw new IllegalArgumentException("Brightness value not acceptable: Defined from 0 to 1");
 		currentNits = (int) (newBrightness * maxNits);
 	}
@@ -108,7 +113,7 @@ public final class StandardDisplay implements Display {
 	
 	@Override
 	public void setColorTemperature(int newTemperature) {
-		if(newTemperature < 0 || newTemperature > 10)
+		if(newTemperature < MIN_COLOR_TEMPERATURE || newTemperature > MAX_COLOR_TEMPERATURE)
 			throw new IllegalArgumentException("Not acceptable colorTemperature argument: must be between 0 and 10");
 		colorTemperature = newTemperature;
 	}
