@@ -1,5 +1,4 @@
 Chiedere:
     - frecce UML: ritorno metodi hanno una freccia?? È giusto?
+    - creare AllDiagrams.pdf con tutti i diagrammi, incluso uello con i tipi
     - test -> inserire infiniti getters e setters package-private o lasciare gli argomenti package-private? (vedi chack-list: "Fate attenzione a specificare correttamente la visibilità dei vari membri. Ricordate che le variabili di istanza devono essere tutte private. Inoltre, i metodi devono essere pubblici solo se sono pensati peressere usati da “client” (cioè anche da vostro codice). Ricordate che se un metodo serve solo nei test NON deve essere reso pubblico (ma si deve usare il “package-private”). L’uso scorretto della visibilità sarà considerato un errore molto grave.")
-    - test -> rendere green il converge nel caso delle lambda
-    - test -> aggiungere combinazioni per decorator?
