@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import jds.display.interfaces.VideoInterface;
 
-public class DisplaySetterToTestMulfunctions {
+public class DisplaySetterToTestMalfunctions {
 	
-	private DisplaySetterToTestMulfunctions() {
+	private DisplaySetterToTestMalfunctions() {
 	}
 	
 	public static void setResolution(Display display, String resolution) {

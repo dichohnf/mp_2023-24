@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import jds.Sensor;
 import jds.display.interfaces.VideoInterface;
-import jds.display.mulfunction.MulfunctionChecker;
+import jds.display.malfunction.MalfunctionChecker;
 import jds.exception.AbsentVideoInterfaceException;
 import jds.exception.PoorlyDefinedMeasureException;
 
@@ -100,8 +100,8 @@ public abstract class DisplayWithSensorDecorator<T> implements Display{
 	}
 	
 	@Override
-	public String mulfunctionTest(MulfunctionChecker checker) {
-		return component.mulfunctionTest(checker);
+	public String malfunctionTest(MalfunctionChecker checker) {
+		return component.malfunctionTest(checker);
 	}
 	
 	public void setBestConfiguration() {

@@ -1,10 +1,10 @@
-package jds.display.mulfunction;
+package jds.display.malfunction;
 
 import jds.display.Display;
 
-public final class UnexpectedlyDisconnectedInterfaceChecker extends MulfunctionChecker {
+public final class UnexpectedlyDisconnectedInterfaceChecker extends MalfunctionChecker {
 
-	public UnexpectedlyDisconnectedInterfaceChecker(MulfunctionChecker nextChecker) {
+	public UnexpectedlyDisconnectedInterfaceChecker(MalfunctionChecker nextChecker) {
 		super(nextChecker);
 	}
 	

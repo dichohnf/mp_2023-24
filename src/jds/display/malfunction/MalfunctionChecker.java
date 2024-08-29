@@ -1,12 +1,12 @@
-package jds.display.mulfunction;
+package jds.display.malfunction;
 
 import jds.display.Display;
 
-public abstract class MulfunctionChecker {
+public abstract class MalfunctionChecker {
 
-	private final MulfunctionChecker nextChecker;
+	private final MalfunctionChecker nextChecker;
 
-	protected MulfunctionChecker(MulfunctionChecker nextChecker) {
+	protected MalfunctionChecker(MalfunctionChecker nextChecker) {
 		this.nextChecker = nextChecker;
 	}
 	

@@ -10,20 +10,22 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
-import jds.MockStreamChannel;
-import jds.StreamChannel;
+import jds.MockStreamReciver;
+import jds.MockStreamSender;
+import jds.StreamReciver;
+import jds.StreamSender;
 import jds.display.interfaces.VideoInterface;
-import jds.display.mulfunction.MulfunctionChecker;
-import jds.display.mulfunction.UnexpectedlyChangedResolutionChecker;
+import jds.display.malfunction.MalfunctionChecker;
+import jds.display.malfunction.UnexpectedlyChangedResolutionChecker;
 import jds.exception.AbsentVideoInterfaceException;
 
 public class StandardDisplayTest {
 
 	int maxNits;
 	List<String> supportedResolutions;
-	StreamChannel displayChannel;
+	StreamSender displayChannel;
 	List<VideoInterface> supportedInterfaces;
-	StreamChannel interfaceChannel;
+	StreamReciver interfaceChannel;
 	VideoInterface videoInterface;
 	Display display;
 	
@@ -31,8 +33,8 @@ public class StandardDisplayTest {
 	public void setUp() {
 		maxNits = 600;
 		supportedResolutions= List.of("1366x768", "720p");
-		displayChannel = new MockStreamChannel();
-		interfaceChannel = new MockStreamChannel();
+		displayChannel = new MockStreamSender();
+		interfaceChannel = new MockStreamReciver();
 		videoInterface = new VideoInterface("VGA", "WVGA", interfaceChannel);
 		supportedInterfaces = List.of(videoInterface);
 		display = new StandardDisplay(maxNits, supportedResolutions, displayChannel, supportedInterfaces);
@@ -105,7 +107,7 @@ public class StandardDisplayTest {
 		((StandardDisplay)display).selectedInterface = Optional.of(videoInterface);
 		display.displayStream();
 		assertThat(
-				((MockStreamChannel) displayChannel).sentStreams.get(0))
+				((MockStreamSender) displayChannel).sentStreams.get(0))
 			.isSameAs(videoInterface.getStream());
 	}
 
@@ -113,7 +115,7 @@ public class StandardDisplayTest {
 	public void testDisplayMenu() {
 		display.displayMenu();
 		assertThat(
-				((MockStreamChannel) displayChannel).requests.get(0))
+				((MockStreamSender) displayChannel).requests.get(0))
 			.isEqualTo("Menu");
 	}
 
@@ -121,7 +123,7 @@ public class StandardDisplayTest {
 	public void testDisplayError() {
 		display.displayError("error test");
 		assertThat(
-				((MockStreamChannel) displayChannel).requests.get(0))
+				((MockStreamSender) displayChannel).requests.get(0))
 			.isEqualTo("Error: error test");
 	}
 
@@ -191,7 +193,7 @@ public class StandardDisplayTest {
 				() -> display.connectInterface(
 						new VideoInterface("HDMI",
 								"1.1", 
-								new MockStreamChannel())))
+								new MockStreamReciver())))
         	.isInstanceOf(AbsentVideoInterfaceException.class)
         	.hasMessage("Impossible connection: Display is not provided with specified video interface");
         assertThat(display.connectInterface(videoInterface))
@@ -243,8 +245,8 @@ public class StandardDisplayTest {
 
 	@Test
 	public void testMulfunctionTest() {
-		MulfunctionChecker checker = new UnexpectedlyChangedResolutionChecker(null);
-		assertThat(display.mulfunctionTest(checker))
+		MalfunctionChecker checker = new UnexpectedlyChangedResolutionChecker(null);
+		assertThat(display.malfunctionTest(checker))
 			.isEqualTo("No mulfunction detected");
 	}
 

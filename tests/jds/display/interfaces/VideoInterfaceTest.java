@@ -6,21 +6,21 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.Before;
 import org.junit.Test;
 
-import jds.StreamChannel;
-import jds.MockStreamChannel;
+import jds.MockStreamReciver;
+import jds.StreamReciver;
 
 public class VideoInterfaceTest {
 
 	String name;
 	String version;
-	StreamChannel channel;
+	StreamReciver channel;
 	VideoInterface inter;
 	
 	@Before
 	public void setUp() {
 		name	= "VGA";
 		version	= "HD 720";
-		channel = new MockStreamChannel();
+		channel = new MockStreamReciver();
 		inter 	= new VideoInterface(name, version, channel);
 	}
 
@@ -42,7 +42,7 @@ public class VideoInterfaceTest {
 	
 	@Test
 	public void testEquals() {
-		StreamChannel secondChannel	 = new MockStreamChannel();
+		StreamReciver secondChannel	 = new MockStreamReciver();
 		VideoInterface equalInter	 = new VideoInterface(name, version, channel);
 		VideoInterface diffName		 = new VideoInterface("HDMI", version, channel);
 		VideoInterface diffVersion	 = new VideoInterface(name, "SXGA", channel);
@@ -61,7 +61,7 @@ public class VideoInterfaceTest {
 	
 	@Test
 	public void testHashCode() {
-		StreamChannel secondChannel	 = new MockStreamChannel();
+		StreamReciver secondChannel	 = new MockStreamReciver();
 		VideoInterface equalInter	 = new VideoInterface(name, version, channel);
 		VideoInterface diffName		 = new VideoInterface("HDMI", version, channel);
 		VideoInterface diffVersion	 = new VideoInterface(name, "SXGA", channel);

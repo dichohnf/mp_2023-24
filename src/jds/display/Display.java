@@ -3,7 +3,7 @@ package jds.display;
 import java.util.List;
 
 import jds.display.interfaces.VideoInterface;
-import jds.display.mulfunction.MulfunctionChecker;
+import jds.display.malfunction.MalfunctionChecker;
 import jds.exception.AbsentVideoInterfaceException;
 
 public interface Display {
@@ -38,6 +38,6 @@ public interface Display {
 	
 	VideoInterface getSelectedInterface();
 	
-	String mulfunctionTest(MulfunctionChecker checker);
+	String malfunctionTest(MalfunctionChecker checker);
 	
 }

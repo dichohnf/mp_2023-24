@@ -11,12 +11,14 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
-import jds.MockStreamChannel;
+import jds.MockStreamReciver;
+import jds.MockStreamSender;
 import jds.Sensor;
-import jds.StreamChannel;
+import jds.StreamReciver;
+import jds.StreamSender;
 import jds.display.interfaces.VideoInterface;
-import jds.display.mulfunction.MulfunctionChecker;
-import jds.display.mulfunction.UnexpectedlyChangedResolutionChecker;
+import jds.display.malfunction.MalfunctionChecker;
+import jds.display.malfunction.UnexpectedlyChangedResolutionChecker;
 import jds.exception.AbsentVideoInterfaceException;
 import jds.exception.PoorlyDefinedMeasureException;
 
@@ -24,9 +26,9 @@ public class DisplayWithBrightnessSensorDecoratorTest {
 
 	int maxNits;
 	List<String> supportedResolutions;
-	StreamChannel componentChannel;
+	StreamSender componentChannel;
 	List<VideoInterface> supportedInterfaces;
-	StreamChannel interfaceChannel;
+	StreamReciver interfaceChannel;
 	VideoInterface videoInterface;
 	Display component;
 	Sensor<Double> brightnessSensor;
@@ -39,8 +41,8 @@ public class DisplayWithBrightnessSensorDecoratorTest {
 	public void setUp() {
 		maxNits = 600;
 		supportedResolutions= List.of("1366x768", "720p");
-		componentChannel = new MockStreamChannel();
-		interfaceChannel = new MockStreamChannel();
+		componentChannel = new MockStreamSender();
+		interfaceChannel = new MockStreamReciver();
 		videoInterface = new VideoInterface("VGA", "WVGA", interfaceChannel);
 		supportedInterfaces = List.of(videoInterface);
 		brightnessSensor = (Sensor<Double>) () -> Double.valueOf(6000);
@@ -182,7 +184,7 @@ public class DisplayWithBrightnessSensorDecoratorTest {
 				() -> outerDecorator.connectInterface(
 						new VideoInterface("HDMI",
 								"1.1", 
-								new MockStreamChannel())))
+								new MockStreamReciver())))
         	.isInstanceOf(AbsentVideoInterfaceException.class)
         	.hasMessage("Impossible connection: Display is not provided with specified video interface");
         assertThat(outerDecorator.connectInterface(videoInterface))
@@ -236,9 +238,9 @@ public class DisplayWithBrightnessSensorDecoratorTest {
 
 	@Test
 	public void testMulfunctionTest() {
-		MulfunctionChecker checker = new UnexpectedlyChangedResolutionChecker(null);
-		assertThat(outerDecorator.mulfunctionTest(checker))
-			.isEqualTo(component.mulfunctionTest(checker));
+		MalfunctionChecker checker = new UnexpectedlyChangedResolutionChecker(null);
+		assertThat(outerDecorator.malfunctionTest(checker))
+			.isEqualTo(component.malfunctionTest(checker));
 	}
 	
 	@SuppressWarnings("unchecked")

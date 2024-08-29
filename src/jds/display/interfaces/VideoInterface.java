@@ -2,16 +2,16 @@ package jds.display.interfaces;
 
 import java.util.Objects;
 
-import jds.StreamChannel;
+import jds.StreamReciver;
 import jds.videostream.VideoStream;
 
 public final class VideoInterface {
 	
 	private final String name;
 	private final String version;
-	private final StreamChannel channel;
+	private final StreamReciver channel;
 	
-	public VideoInterface(String name, String version, StreamChannel channel) {
+	public VideoInterface(String name, String version, StreamReciver channel) {
 		this.name = Objects.requireNonNull(
 				name, 
 				"Null name argument");

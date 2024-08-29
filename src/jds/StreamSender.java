@@ -2,11 +2,10 @@ package jds;
 
 import jds.videostream.VideoStream;
 
-public interface StreamChannel {
+public interface StreamSender {
 	
 	void sendRequest(String message);
 	
 	void sendStream(VideoStream stream);
-	
-	VideoStream streamRecive();
+
 }

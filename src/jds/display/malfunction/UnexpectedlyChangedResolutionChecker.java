@@ -1,10 +1,10 @@
-package jds.display.mulfunction;
+package jds.display.malfunction;
 
 import jds.display.Display;
 
-public final class UnexpectedlyChangedResolutionChecker extends MulfunctionChecker {
+public final class UnexpectedlyChangedResolutionChecker extends MalfunctionChecker {
 
-	public UnexpectedlyChangedResolutionChecker(MulfunctionChecker nextChecker) {
+	public UnexpectedlyChangedResolutionChecker(MalfunctionChecker nextChecker) {
 		super(nextChecker);
 	}
 
