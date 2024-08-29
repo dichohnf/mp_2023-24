@@ -13,28 +13,28 @@ public class VideoInterfaceTest {
 
 	String name;
 	String version;
-	StreamReciver channel;
+	StreamReciver reciver;
 	VideoInterface inter;
 	
 	@Before
 	public void setUp() {
 		name	= "VGA";
 		version	= "HD 720";
-		channel = new MockStreamReciver();
-		inter 	= new VideoInterface(name, version, channel);
+		reciver = new MockStreamReciver();
+		inter 	= new VideoInterface(name, version, reciver);
 	}
 
 	@Test
 	public void testVideoInterface() {
-		assertThatThrownBy(() -> new VideoInterface(null, version, channel))
+		assertThatThrownBy(() -> new VideoInterface(null, version, reciver))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("Null name argument");
-		assertThatThrownBy(() -> new VideoInterface(name, null, channel))
+		assertThatThrownBy(() -> new VideoInterface(name, null, reciver))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("Null version argument");
 		assertThatThrownBy(() -> new VideoInterface(name, version, null))
 			.isInstanceOf(NullPointerException.class)
-			.hasMessage("Null channel argument");
+			.hasMessage("Null reciver argument");
 		assertThat(inter)
 			.isInstanceOf(VideoInterface.class)
 			.hasNoNullFieldsOrProperties();
@@ -42,15 +42,15 @@ public class VideoInterfaceTest {
 	
 	@Test
 	public void testEquals() {
-		StreamReciver secondChannel	 = new MockStreamReciver();
-		VideoInterface equalInter	 = new VideoInterface(name, version, channel);
-		VideoInterface diffName		 = new VideoInterface("HDMI", version, channel);
-		VideoInterface diffVersion	 = new VideoInterface(name, "SXGA", channel);
-		VideoInterface diffChannel	 = new VideoInterface(name, version, secondChannel);
-		VideoInterface completelyDiff=  new VideoInterface("HDMI", "1.3", secondChannel);
+		StreamReciver secondReciver	 = new MockStreamReciver();
+		VideoInterface equalInter	 = new VideoInterface(name, version, reciver);
+		VideoInterface diffName		 = new VideoInterface("HDMI", version, reciver);
+		VideoInterface diffVersion	 = new VideoInterface(name, "SXGA", reciver);
+		VideoInterface diffReciver	 = new VideoInterface(name, version, secondReciver);
+		VideoInterface completelyDiff=  new VideoInterface("HDMI", "1.3", secondReciver);
 		assertThat(inter.equals(equalInter))
 			.isEqualTo(equalInter.equals(inter))
-			.isEqualTo(inter.equals(diffChannel))
+			.isEqualTo(inter.equals(diffReciver))
 			.isTrue();
 		assertThat(inter.equals(completelyDiff))
 			.isEqualTo(completelyDiff.equals(inter))
@@ -61,18 +61,18 @@ public class VideoInterfaceTest {
 	
 	@Test
 	public void testHashCode() {
-		StreamReciver secondChannel	 = new MockStreamReciver();
-		VideoInterface equalInter	 = new VideoInterface(name, version, channel);
-		VideoInterface diffName		 = new VideoInterface("HDMI", version, channel);
-		VideoInterface diffVersion	 = new VideoInterface(name, "SXGA", channel);
-		VideoInterface diffChannel	 = new VideoInterface(name, version, secondChannel);
-		VideoInterface completelyDiff=  new VideoInterface("HDMI", "1.3", secondChannel);
+		StreamReciver secondReciver	 = new MockStreamReciver();
+		VideoInterface equalInter	 = new VideoInterface(name, version, reciver);
+		VideoInterface diffName		 = new VideoInterface("HDMI", version, reciver);
+		VideoInterface diffVersion	 = new VideoInterface(name, "SXGA", reciver);
+		VideoInterface diffReciver	 = new VideoInterface(name, version, secondReciver);
+		VideoInterface completelyDiff=  new VideoInterface("HDMI", "1.3", secondReciver);
 		assertThat(inter.hashCode())
 			.isEqualTo(equalInter.hashCode())
 			.isNotEqualTo(completelyDiff.hashCode())	
 			.isNotEqualTo(diffName.hashCode())
 			.isNotEqualTo(diffVersion.hashCode())
-			.isEqualTo(diffChannel.hashCode());
+			.isEqualTo(diffReciver.hashCode());
 	}
 
 	@Test
@@ -86,7 +86,7 @@ public class VideoInterfaceTest {
 	@Test
 	public void testGetStream() {
 		assertThat(inter.getStream())
-			.isSameAs(channel.streamRecive());
+			.isSameAs(reciver.streamRecive());
 	}
 
 }

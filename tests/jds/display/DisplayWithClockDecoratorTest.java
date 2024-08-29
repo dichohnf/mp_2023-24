@@ -24,9 +24,9 @@ public class DisplayWithClockDecoratorTest {
 
 	int maxNits;
 	List<String> supportedResolutions;
-	StreamSender componentChannel;
+	StreamSender sender;
 	List<VideoInterface> supportedInterfaces;
-	StreamReciver interfaceChannel;
+	StreamReciver reciver;
 	VideoInterface videoInterface;
 	Display component;
 	Sensor<Double> brightnessSensor;
@@ -39,13 +39,13 @@ public class DisplayWithClockDecoratorTest {
 	public void setUp() {
 		maxNits = 600;
 		supportedResolutions= List.of("1366x768", "720p");
-		componentChannel = new MockStreamSender();
-		interfaceChannel = new MockStreamReciver();
-		videoInterface = new VideoInterface("VGA", "WVGA", interfaceChannel);
+		sender = new MockStreamSender();
+		reciver = new MockStreamReciver();
+		videoInterface = new VideoInterface("VGA", "WVGA", reciver);
 		supportedInterfaces = List.of(videoInterface);
 		brightnessSensor = (Sensor<Double>) () -> Double.valueOf(6000);
 		clock = (Sensor<LocalTime>) () -> LocalTime.parse("02:00");
-		component = new StandardDisplay(maxNits, supportedResolutions, componentChannel, supportedInterfaces);
+		component = new StandardDisplay(maxNits, supportedResolutions, sender, supportedInterfaces);
 		saturation = 10000.0;
 		innerDecorator = new DisplayWithBrightnessSensorDecorator(brightnessSensor, component, saturation);
 		outerDecorator = new DisplayWithClockDecorator(clock, innerDecorator);

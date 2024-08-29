@@ -12,8 +12,8 @@ public abstract class MalfunctionChecker {
 	
 	public String checkMulfunction(Display display) {
 		return (nextChecker != null)
-				?nextChecker.checkMulfunction(display)
-				:"No mulfunction detected";
+				? nextChecker.checkMulfunction(display)
+				: "No mulfunction detected";
 	}
 
 }

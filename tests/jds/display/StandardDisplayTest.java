@@ -22,9 +22,9 @@ public class StandardDisplayTest {
 
 	int maxNits;
 	List<String> supportedResolutions;
-	StreamSender displayChannel;
+	StreamSender sender;
 	List<VideoInterface> supportedInterfaces;
-	StreamReciver interfaceChannel;
+	StreamReciver reciver;
 	VideoInterface videoInterface;
 	Display display;
 	
@@ -32,11 +32,11 @@ public class StandardDisplayTest {
 	public void setUp() {
 		maxNits = 600;
 		supportedResolutions= List.of("1366x768", "720p");
-		displayChannel = new MockStreamSender();
-		interfaceChannel = new MockStreamReciver();
-		videoInterface = new VideoInterface("VGA", "WVGA", interfaceChannel);
+		sender = new MockStreamSender();
+		reciver = new MockStreamReciver();
+		videoInterface = new VideoInterface("VGA", "WVGA", reciver);
 		supportedInterfaces = List.of(videoInterface);
-		display = new StandardDisplay(maxNits, supportedResolutions, displayChannel, supportedInterfaces);
+		display = new StandardDisplay(maxNits, supportedResolutions, sender, supportedInterfaces);
 	}
 
 	@Test
@@ -44,7 +44,7 @@ public class StandardDisplayTest {
 		negativeNitsExceptionCheck();
 		nullSupportedResolutionExceptionCheck();
 		emptySupportedResolutionExceptionCheck();
-		nullChannelExceptionCheck();
+		nullSenderExceptionCheck();
 		nullSupportedInterfacesExceptionCheck();
 		emptySupportedInterfacesExceptionCheck();
 		assertThat(display)
@@ -56,26 +56,26 @@ public class StandardDisplayTest {
 
 	private void negativeNitsExceptionCheck() {
 		assertThatThrownBy(
-				() -> new StandardDisplay(-1, supportedResolutions, displayChannel, supportedInterfaces))
+				() -> new StandardDisplay(-1, supportedResolutions, sender, supportedInterfaces))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("Negative maxNits argument");
 	}
 	
 	private void nullSupportedResolutionExceptionCheck() {
 		assertThatThrownBy(
-				() -> new StandardDisplay(maxNits, null, displayChannel, supportedInterfaces))
+				() -> new StandardDisplay(maxNits, null, sender, supportedInterfaces))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("Null supportedResolution argument");
 	}
 
 	private void emptySupportedResolutionExceptionCheck() {
 		assertThatThrownBy(
-				() -> new StandardDisplay(maxNits, List.of(), displayChannel, supportedInterfaces))
+				() -> new StandardDisplay(maxNits, List.of(), sender, supportedInterfaces))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("Empty supportedResolution argument");
 	}
 	
-	private void nullChannelExceptionCheck() {
+	private void nullSenderExceptionCheck() {
 		assertThatThrownBy(
 				() -> new StandardDisplay(maxNits, supportedResolutions, null, supportedInterfaces))
 		.isInstanceOf(NullPointerException.class)
@@ -84,14 +84,14 @@ public class StandardDisplayTest {
 
 	private void nullSupportedInterfacesExceptionCheck() {
 		assertThatThrownBy(
-				() -> new StandardDisplay(maxNits, supportedResolutions, displayChannel, null))
+				() -> new StandardDisplay(maxNits, supportedResolutions, sender, null))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("Null supportedInterfaces argument");
 	}
 
 	private void emptySupportedInterfacesExceptionCheck() {
 		assertThatThrownBy(
-				() -> new StandardDisplay(maxNits, supportedResolutions, displayChannel, List.of()))
+				() -> new StandardDisplay(maxNits, supportedResolutions, sender, List.of()))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("Empty supportedInterfaces argument");
 	}
@@ -106,7 +106,7 @@ public class StandardDisplayTest {
 		((StandardDisplay)display).forceInputInterface(videoInterface);
 		display.displayStream();
 		assertThat(
-				((MockStreamSender) displayChannel).sentStreams.get(0))
+				((MockStreamSender) sender).sentStreams.get(0))
 			.isSameAs(videoInterface.getStream());
 	}
 
@@ -114,7 +114,7 @@ public class StandardDisplayTest {
 	public void testDisplayMenu() {
 		display.displayMenu();
 		assertThat(
-				((MockStreamSender) displayChannel).requests.get(0))
+				((MockStreamSender) sender).requests.get(0))
 			.isEqualTo("Menu");
 	}
 
@@ -122,7 +122,7 @@ public class StandardDisplayTest {
 	public void testDisplayError() {
 		display.displayError("error test");
 		assertThat(
-				((MockStreamSender) displayChannel).requests.get(0))
+				((MockStreamSender) sender).requests.get(0))
 			.isEqualTo("Error: error test");
 	}
 

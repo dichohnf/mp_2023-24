@@ -114,6 +114,7 @@ public abstract class DisplayWithSensorDecorator<T> implements Display{
 
 	protected abstract void setValue(T measure) throws PoorlyDefinedMeasureException;
 	
+	// Only for test
 	Display getComponent() {
 		return component;
 	}

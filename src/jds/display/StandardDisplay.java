@@ -21,7 +21,7 @@ public final class StandardDisplay implements Display {
 	
 	private final int maxNits;
 	private final List<String> supportedResolutions;
-	private final StreamSender channel;
+	private final StreamSender sender;
 	private final List<VideoInterface> supportedInterfaces;
 	private int currentNits;
 	private int colorTemperature;
@@ -31,12 +31,12 @@ public final class StandardDisplay implements Display {
 	
 	public StandardDisplay(int maxNits,
 			List<String> supportedResolutions,
-			StreamSender channel,
+			StreamSender sender,
 			List<VideoInterface> supportedInterfaces) {
 		
 		this.maxNits = checkedMaxNits(maxNits);
 		this.supportedResolutions = checkedSupportedResolutions(supportedResolutions);
-		this.channel = checkedChannel(channel);
+		this.sender = checkedChannel(sender);
 		this.supportedInterfaces = checkedSupportedInterfaces(supportedInterfaces);
 		setBrightness(0.5);
 		setColorTemperature(5);
@@ -78,7 +78,7 @@ public final class StandardDisplay implements Display {
 	
 	@Override
 	public void displayStream() {
-		channel.sendStream(
+		sender.sendStream(
 				selectedInterface.orElseThrow(
 						() -> new NoSuchElementException("Not selected interface"))
 				.getStream());
@@ -86,12 +86,12 @@ public final class StandardDisplay implements Display {
 		
 	@Override
 	public void displayMenu() {
-		channel.sendRequest("Menu");
+		sender.sendRequest("Menu");
 	}
 	
 	@Override
 	public void displayError(String message) {
-		channel.sendRequest("Error: " + message);
+		sender.sendRequest("Error: " + message);
 	}
 	
 	@Override
@@ -166,7 +166,7 @@ public final class StandardDisplay implements Display {
 				Objects.requireNonNull(
 						videoIterface, 
 						"Null videoInterface argument"))) {
-			channel.sendRequest("Input error: Interface not present");
+			sender.sendRequest("Input error: Interface not present");
 			throw new AbsentVideoInterfaceException("Selected interface is not conneted");
 		}
 		selectedInterface = Optional.of(videoIterface);

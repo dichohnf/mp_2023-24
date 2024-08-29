@@ -44,8 +44,8 @@ public class ComposedFrameTest {
 		simple3 	= new SimpleFrame(bottomLeft3, topRight3, data3);
 		composed1 	= new ComposedFrame(new MockFrameCompositor());
 		composed2	= new ComposedFrame(new MockFrameCompositor());
-		children1 = composed1.getChildren();
-		children2 = composed2.getChildren();
+		children1 	= composed1.getChildren();
+		children2 	= composed2.getChildren();
 		children1.add(simple1);
 		composed1.calculationRelevantPositions();
 		children2.addAll(List.of(simple2, simple3, composed1));

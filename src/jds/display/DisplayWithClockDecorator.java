@@ -14,7 +14,7 @@ public final class DisplayWithClockDecorator extends DisplayWithSensorDecorator<
 	}
 
 	@Override
-	public void setValue(LocalTime measure) {
+	protected void setValue(LocalTime measure) {
 		if(measure.isBefore(LocalTime.of(07, 00)) 
 		|| measure.isAfter(LocalTime.of(22, 00)))
 			setColorTemperature(NIGHT_COLOR);
