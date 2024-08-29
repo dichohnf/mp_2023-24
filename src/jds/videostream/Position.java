@@ -72,12 +72,4 @@ public final class Position {
 					: other.y);
 	}
 	
-	public int getX() {
-		return x;
-	}
-	
-	public int getY() {
-		return y;
-	}
-	
 }

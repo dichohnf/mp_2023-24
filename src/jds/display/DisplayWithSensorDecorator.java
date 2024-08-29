@@ -11,7 +11,7 @@ import jds.exception.PoorlyDefinedMeasureException;
 
 public abstract class DisplayWithSensorDecorator<T> implements Display{
 
-	final Display component;
+	private final Display component;
 	private final Sensor<T> sensor;
 	
 	protected DisplayWithSensorDecorator(Sensor<T> sensor, Display component) {

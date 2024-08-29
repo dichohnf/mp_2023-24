@@ -7,8 +7,8 @@ import jds.exception.PoorlyDefinedMeasureException;
 
 public final class DisplayWithBrightnessSensorDecorator extends DisplayWithSensorDecorator<Double> {
 	
-	static final Double DEFAULT_SATURATION_LUX = Double.valueOf(10000);
-	final Double saturationLuxAmount;
+	public static final Double DEFAULT_SATURATION_LUX = Double.valueOf(10000);
+	private final Double saturationLuxAmount;
 
 	public DisplayWithBrightnessSensorDecorator(
 			Sensor<Double> sensor, Display component, Double saturationLuxAmount) {
@@ -32,6 +32,10 @@ public final class DisplayWithBrightnessSensorDecorator extends DisplayWithSenso
 		// Linear algorithm to select right brightness
 		// Can add a strategy to define different algorithms
 		return (measure >= saturationLuxAmount) ? 1 : measure/saturationLuxAmount;
+	}
+	
+	Double getSaturationLuxAmount() {
+		return saturationLuxAmount;
 	}
 
 }

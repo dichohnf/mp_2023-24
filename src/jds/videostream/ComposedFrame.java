@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public final class ComposedFrame extends VideoFrame {
 
-	final Collection<VideoFrame> children;
+	private final Collection<VideoFrame> children;
 	private final FrameCompositor compositor;
 	private static final Position MIN_POSITION = new Position(Integer.MIN_VALUE, Integer.MIN_VALUE);
 	private static final Position MAX_POSITION = new Position(Integer.MAX_VALUE, Integer.MAX_VALUE);
@@ -38,6 +38,7 @@ public final class ComposedFrame extends VideoFrame {
 		return tmp;
 	}
 	
+	// package-private to test add() and remove() methods
 	void calculationRelevantPositions() {
 		setBottomLeftPosition(children.stream()
 				.map(VideoFrame::getBottomLeftPosition)
@@ -47,6 +48,11 @@ public final class ComposedFrame extends VideoFrame {
 				.map(VideoFrame::getBottomLeftPosition)
 				.reduce(Position::topRightIntersection)
 				.orElse(MAX_POSITION));
+	}
+	
+	// Only for test
+	Collection<VideoFrame> getChildren() {
+		return children;
 	}
 
 }

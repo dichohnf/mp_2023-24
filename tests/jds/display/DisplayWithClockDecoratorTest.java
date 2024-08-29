@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -67,15 +66,15 @@ public class DisplayWithClockDecoratorTest {
 
 	@Test
 	public void testSetValue() {
-		assertThat(((StandardDisplay)component).colorTemperature)
+		assertThat(component.getColorTemperature())
 			.isEqualTo(5);
 		((DisplayWithClockDecorator)outerDecorator)
 			.setValue(LocalTime.parse("06:59"));
-		assertThat(((StandardDisplay)component).colorTemperature)
+		assertThat(component.getColorTemperature())
 			.isEqualTo(10);
 		((DisplayWithClockDecorator)outerDecorator)
 			.setValue(LocalTime.parse("17:23"));
-		assertThat(((StandardDisplay)component).colorTemperature)
+		assertThat(component.getColorTemperature())
 			.isEqualTo(5);
 	}
 		
@@ -125,8 +124,8 @@ public class DisplayWithClockDecoratorTest {
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("Brightness value not acceptable: Defined from 0 to 1");
 		outerDecorator.setBrightness(0.8);
-		assertThat(((StandardDisplay)component).currentNits)
-			.isEqualTo((int) (0.8 * maxNits));
+		assertThat(component.getBrightness())
+			.isEqualTo(0.8);
 	}
 
 	@Test
@@ -146,7 +145,7 @@ public class DisplayWithClockDecoratorTest {
         	.isInstanceOf(IllegalArgumentException.class)
         	.hasMessage("Not acceptable colorTemperature argument: must be between 0 and 10");
         outerDecorator.setColorTemperature(9);
-        assertThat(((StandardDisplay)component).colorTemperature)
+        assertThat(component.getColorTemperature())
         	.isEqualTo(9);
 	}
 
@@ -160,10 +159,10 @@ public class DisplayWithClockDecoratorTest {
 				() -> outerDecorator.setResolution("1440p"))
         	.isInstanceOf(IllegalArgumentException.class)
         	.hasMessage("Selected resolution is not supported");
-        assertThat(((StandardDisplay)component).resolution)
+        assertThat(component.getResolution())
     		.isEqualTo("1366x768");
         outerDecorator.setResolution("720p");
-        assertThat(((StandardDisplay)component).resolution)
+        assertThat(component.getResolution())
         	.isEqualTo("720p");
 	}
 
@@ -178,17 +177,16 @@ public class DisplayWithClockDecoratorTest {
         	.hasMessage("Impossible connection: Display is not provided with specified video interface");
         assertThat(outerDecorator.connectInterface(videoInterface))
         	.isTrue();
-        assertThat(((StandardDisplay)component).connectedInterfaces)
+        assertThat(component.getConnectedInterfaces())
         	.contains(videoInterface);
 	}
 
 	@Test
-	public void testDisconnectInterface() {
-		((StandardDisplay)component).connectedInterfaces
-			.add(videoInterface);
+	public void testDisconnectInterface() throws AbsentVideoInterfaceException {
+		component.connectInterface(videoInterface);
         assertThat(outerDecorator.disconnectInterface(videoInterface))
     		.isTrue();
-        assertThat(((StandardDisplay)component).connectedInterfaces)
+        assertThat(component.getConnectedInterfaces())
     		.doesNotContain(videoInterface);
         assertThat(outerDecorator.disconnectInterface(videoInterface))
     		.isFalse();
@@ -206,21 +204,19 @@ public class DisplayWithClockDecoratorTest {
 				() -> outerDecorator.selectInputInterface(videoInterface))
 			.isInstanceOf(AbsentVideoInterfaceException.class)
 			.hasMessage("Selected interface is not conneted");
-		((StandardDisplay)component).connectedInterfaces
-			.add(videoInterface);
+		component.connectInterface(videoInterface);
 		outerDecorator.selectInputInterface(videoInterface);	
-		assertThat(((StandardDisplay)component).selectedInterface)
-			.isPresent()
-			.contains(videoInterface);
+		assertThat(component.getSelectedInterface())
+			.isSameAs(videoInterface);
 		}
 
 	@Test
-	public void testGetSelectedInterface() {
+	public void testGetSelectedInterface() throws AbsentVideoInterfaceException {
 		assertThatThrownBy(
 				() -> outerDecorator.getSelectedInterface())
 			.isInstanceOf(NoSuchElementException.class);
-		((StandardDisplay)component).connectedInterfaces.add(videoInterface);
-		((StandardDisplay)component).selectedInterface = Optional.of(videoInterface);
+		component.connectInterface(videoInterface);
+		((StandardDisplay)component).forceInputInterface(videoInterface);
 		assertThat(outerDecorator.getSelectedInterface())
 			.isEqualTo(component.getSelectedInterface());
 	}

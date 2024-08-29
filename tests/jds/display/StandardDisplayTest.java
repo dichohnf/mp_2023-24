@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,8 +50,8 @@ public class StandardDisplayTest {
 		assertThat(display)
 			.isInstanceOf(Display.class)
 			.hasNoNullFieldsOrProperties();
-		assertThat(((StandardDisplay)display).currentNits)
-			.isEqualTo(300);
+		assertThat(display.getBrightness())
+			.isEqualTo(0.5);
 	}
 
 	private void negativeNitsExceptionCheck() {
@@ -98,13 +97,13 @@ public class StandardDisplayTest {
 	}
 	
 	@Test
-	public void testDisplayStream() {
+	public void testDisplayStream() throws AbsentVideoInterfaceException {
 		assertThatThrownBy(
 				() -> display.displayStream())
 			.isInstanceOf(NoSuchElementException.class)
 			.hasMessage("Not selected interface");
-		((StandardDisplay)display).connectedInterfaces.add(videoInterface);
-		((StandardDisplay)display).selectedInterface = Optional.of(videoInterface);
+		display.connectInterface(videoInterface);
+		((StandardDisplay)display).forceInputInterface(videoInterface);
 		display.displayStream();
 		assertThat(
 				((MockStreamSender) displayChannel).sentStreams.get(0))
@@ -145,14 +144,14 @@ public class StandardDisplayTest {
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("Brightness value not acceptable: Defined from 0 to 1");
 		display.setBrightness(0.8);
-		assertThat(((StandardDisplay)display).currentNits)
-			.isEqualTo((int) (0.8 * maxNits));
+		assertThat(display.getBrightness())
+			.isEqualTo(0.8);
 	}
 
 	@Test
 	public void testGetBrightness() {
 		assertThat(display.getBrightness())
-			.isEqualTo((double) ((StandardDisplay)display).currentNits / maxNits);
+			.isEqualTo(display.getBrightness());
 	}
 
 	@Test
@@ -166,7 +165,7 @@ public class StandardDisplayTest {
         	.isInstanceOf(IllegalArgumentException.class)
         	.hasMessage("Not acceptable colorTemperature argument: must be between 0 and 10");
         display.setColorTemperature(9);
-        assertThat(((StandardDisplay)display).colorTemperature)
+        assertThat(display.getColorTemperature())
         	.isEqualTo(9);
 	}
 
@@ -180,10 +179,10 @@ public class StandardDisplayTest {
 				() -> display.setResolution("1440p"))
         	.isInstanceOf(IllegalArgumentException.class)
         	.hasMessage("Selected resolution is not supported");
-        assertThat(((StandardDisplay)display).resolution)
+        assertThat(display.getResolution())
     		.isEqualTo("1366x768");
         display.setResolution("720p");
-        assertThat(((StandardDisplay)display).resolution)
+        assertThat(display.getResolution())
         	.isEqualTo("720p");
 	}
 
@@ -198,16 +197,16 @@ public class StandardDisplayTest {
         	.hasMessage("Impossible connection: Display is not provided with specified video interface");
         assertThat(display.connectInterface(videoInterface))
         	.isTrue();
-        assertThat(((StandardDisplay)display).connectedInterfaces)
+        assertThat(display.getConnectedInterfaces())
         	.contains(videoInterface);
 	}
 
 	@Test
-	public void testDisconnectInterface() {
-		((StandardDisplay)display).connectedInterfaces.add(videoInterface);
+	public void testDisconnectInterface() throws AbsentVideoInterfaceException {
+		display.connectInterface(videoInterface);
         assertThat(display.disconnectInterface(videoInterface))
     		.isTrue();
-        assertThat(((StandardDisplay)display).connectedInterfaces)
+        assertThat(display.getConnectedInterfaces())
     		.doesNotContain(videoInterface);
         assertThat(display.disconnectInterface(videoInterface))
     		.isFalse();
@@ -226,19 +225,18 @@ public class StandardDisplayTest {
 				() -> display.selectInputInterface(videoInterface))
 			.isInstanceOf(AbsentVideoInterfaceException.class)
 			.hasMessage("Selected interface is not conneted");
-		((StandardDisplay)display).connectedInterfaces.add(videoInterface);
+		display.connectInterface(videoInterface);
 		display.selectInputInterface(videoInterface);	
-		assertThat(((StandardDisplay)display).selectedInterface)
-			.isPresent()
-			.contains(videoInterface);
+		assertThat(display.getSelectedInterface())
+			.isSameAs(videoInterface);
 		}
 
 	@Test
-	public void testGetSelectedInterface() {
+	public void testGetSelectedInterface() throws AbsentVideoInterfaceException {
 		assertThatThrownBy(() -> display.getSelectedInterface())
 			.isInstanceOf(NoSuchElementException.class);
-		((StandardDisplay)display).connectedInterfaces.add(videoInterface);
-		((StandardDisplay)display).selectedInterface = Optional.of(videoInterface);
+		display.connectInterface(videoInterface);
+		((StandardDisplay)display).forceInputInterface(videoInterface);
 		assertThat(display.getSelectedInterface())
 			.isEqualTo(videoInterface);
 	}

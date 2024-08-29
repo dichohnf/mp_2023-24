@@ -23,11 +23,11 @@ public final class StandardDisplay implements Display {
 	private final List<String> supportedResolutions;
 	private final StreamSender channel;
 	private final List<VideoInterface> supportedInterfaces;
-	int currentNits;
-	int colorTemperature;
-	String resolution;
-	Optional<VideoInterface> selectedInterface;
-	List<VideoInterface> connectedInterfaces;
+	private int currentNits;
+	private int colorTemperature;
+	private String resolution;
+	private Optional<VideoInterface> selectedInterface;
+	private List<VideoInterface> connectedInterfaces;
 	
 	public StandardDisplay(int maxNits,
 			List<String> supportedResolutions,
@@ -133,6 +133,11 @@ public final class StandardDisplay implements Display {
 		this.resolution = resolution;
 	}
 	
+	// Only for test
+	void forceResolution(String resolution) {
+		this.resolution = resolution;
+	}
+	
 	@Override
 	public String getResolution() {
 		return resolution;
@@ -165,6 +170,11 @@ public final class StandardDisplay implements Display {
 			throw new AbsentVideoInterfaceException("Selected interface is not conneted");
 		}
 		selectedInterface = Optional.of(videoIterface);
+	}
+	
+	// Only for test
+	void forceInputInterface(VideoInterface videoInterface) {
+		selectedInterface = Optional.ofNullable(videoInterface);
 	}
 	
 	@Override

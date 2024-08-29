@@ -3,6 +3,7 @@ package jds.videostream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Before;
@@ -24,6 +25,8 @@ public class ComposedFrameTest {
 	VideoFrame simple3;
 	ComposedFrame composed1;
 	ComposedFrame composed2;
+	Collection<VideoFrame> children1;
+	Collection<VideoFrame> children2;
 	
 	@Before
 	public void setUp() {
@@ -41,8 +44,11 @@ public class ComposedFrameTest {
 		simple3 	= new SimpleFrame(bottomLeft3, topRight3, data3);
 		composed1 	= new ComposedFrame(new MockFrameCompositor());
 		composed2	= new ComposedFrame(new MockFrameCompositor());
-		composed1.children.add(simple1);
-		composed2.children.addAll(List.of(simple2, simple3, composed1));
+		children1 = composed1.getChildren();
+		children2 = composed2.getChildren();
+		children1.add(simple1);
+		composed1.calculationRelevantPositions();
+		children2.addAll(List.of(simple2, simple3, composed1));
 		composed2.calculationRelevantPositions();
  	}
 	
@@ -82,7 +88,7 @@ public class ComposedFrameTest {
 	private void addAndSizeCheck(ComposedFrame parent, VideoFrame child, int size) {
 		assertThat(parent.add(child))
 			.isTrue();
-		assertThat(parent.children)
+		assertThat(parent.getChildren())
 			.isNotNull()
 			.hasSize(size);
 	}
@@ -90,19 +96,19 @@ public class ComposedFrameTest {
 	@Test
 	public void testRemove() {
 		sizeCheckAndRemove(composed2, 3, simple2);
-		assertThat(composed2.children)
+		assertThat(composed2.getChildren())
 			.hasSize(2);
 		assertThat(composed2.remove(simple2))
 			.isFalse();
 		sizeCheckAndRemove(composed2, 2, simple3);
 		sizeCheckAndRemove(composed2, 1, composed1);
-		assertThat(composed2.children)
+		assertThat(composed2.getChildren())
 			.isNotNull()
 			.isEmpty();
 	}
 	
 	private void sizeCheckAndRemove(ComposedFrame parent, int size, VideoFrame child) {
-		assertThat(parent.children)
+		assertThat(parent.getChildren())
 			.hasSize(size);
 		assertThat(parent.remove(child))
 			.isTrue();
