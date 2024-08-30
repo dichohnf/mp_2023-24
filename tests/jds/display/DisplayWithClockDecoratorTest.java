@@ -53,10 +53,12 @@ public class DisplayWithClockDecoratorTest {
 
 	@Test
 	public void testDisplayWithClockDecorator() {
-		assertThatThrownBy(() -> new DisplayWithClockDecorator(null, component))
+		assertThatThrownBy(
+				() -> new DisplayWithClockDecorator(null, component))
       		.isInstanceOf(NullPointerException.class)
       		.hasMessage("Null sensor argument");
-		assertThatThrownBy(() -> new DisplayWithClockDecorator(clock, null))
+		assertThatThrownBy(
+				() -> new DisplayWithClockDecorator(clock, null))
            .isInstanceOf(NullPointerException.class)
            .hasMessage("Null component argument");
 		assertThat(outerDecorator)

@@ -13,39 +13,53 @@ public final class Position {
 	}
 	
 	public boolean isCongruentWith(Position other) {
-		return isNotNull(other) && x == other.x && y == other.y;
+		return isNotNull(other) 
+				&& x == other.x 
+				&& y == other.y;
 	}
 	
 	public boolean isBelow(Position other) {
-		return isNotNull(other) && y <= other.y;
+		return isNotNull(other) 
+				&& y <= other.y;
 	}
 	
 	public boolean isAbove(Position other) {
-		return isNotNull(other) && y >= other.y;
+		return isNotNull(other) 
+				&& y >= other.y;
 	}
 	
 	public boolean isToTheRightOf(Position other) {
-		return isNotNull(other) && x >= other.x ;
+		return isNotNull(other) 
+				&& x >= other.x ;
 	}
 	
 	public boolean isToTheLeftOf(Position other) {
-		return isNotNull(other) && x <= other.x;
+		return isNotNull(other) 
+				&& x <= other.x;
 	}
 	
 	public boolean isAtTopRightOf(Position other) {
-		return isNotNull(other) && x >= other.x && y >= other.y;
+		return isNotNull(other) 
+				&& x >= other.x 
+				&& y >= other.y;
 	}
 	
 	public boolean isAtTopLeftOf(Position other) {
-		return isNotNull(other) && x <= other.x && y >= other.y;
+		return isNotNull(other) 
+				&& x <= other.x 
+				&& y >= other.y;
 	}
 	
 	public boolean isAtBottomLeftOf(Position other) {
-		return isNotNull(other) && x <= other.x && y <= other.y;
+		return isNotNull(other) 
+				&& x <= other.x 
+				&& y <= other.y;
 	}
 	
 	public boolean isAtBottomRightOf(Position other) {
-		return isNotNull(other) && x >= other.x && y <= other.y;
+		return isNotNull(other) 
+				&& x >= other.x 
+				&& y <= other.y;
 	}
 	
 	private boolean isNotNull(Position other) {

@@ -26,13 +26,16 @@ public class VideoInterfaceTest {
 
 	@Test
 	public void testVideoInterface() {
-		assertThatThrownBy(() -> new VideoInterface(null, version, reciver))
+		assertThatThrownBy(
+				() -> new VideoInterface(null, version, reciver))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("Null name argument");
-		assertThatThrownBy(() -> new VideoInterface(name, null, reciver))
+		assertThatThrownBy(
+				() -> new VideoInterface(name, null, reciver))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("Null version argument");
-		assertThatThrownBy(() -> new VideoInterface(name, version, null))
+		assertThatThrownBy(
+				() -> new VideoInterface(name, version, null))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("Null reciver argument");
 		assertThat(inter)

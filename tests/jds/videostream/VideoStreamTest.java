@@ -58,7 +58,8 @@ public class VideoStreamTest {
 			.isSameAs(simple2);
 		assertThat(stream.nextFrame())
 			.isSameAs(composed);
-		assertThatThrownBy(() -> stream.nextFrame())
+		assertThatThrownBy(
+				() -> stream.nextFrame())
 			.isInstanceOf(AbsentFrameException.class)
 			.hasMessage("No frame found");
 	}

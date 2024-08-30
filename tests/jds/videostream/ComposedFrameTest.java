@@ -54,7 +54,8 @@ public class ComposedFrameTest {
 	
 	@Test
 	public void testComposedFrame() {
-		assertThatThrownBy(() -> new ComposedFrame(null))
+		assertThatThrownBy(
+				() -> new ComposedFrame(null))
 			.isInstanceOf(NullPointerException.class)
 			.hasMessage("Null compositor argument");
 		assertThat(composed1)

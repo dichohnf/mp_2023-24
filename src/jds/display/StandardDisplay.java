@@ -41,7 +41,8 @@ public final class StandardDisplay implements Display {
 		setBrightness(0.5);
 		setColorTemperature(5);
 		setResolution(supportedResolutions.stream()
-				.findAny().orElseThrow());
+				.findAny()
+				.orElseThrow());
 		connectedInterfaces = new ArrayList<>();
 		selectedInterface = Optional.empty();
 	}

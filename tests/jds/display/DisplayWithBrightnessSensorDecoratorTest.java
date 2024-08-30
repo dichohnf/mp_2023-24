@@ -54,13 +54,16 @@ public class DisplayWithBrightnessSensorDecoratorTest {
 
 	@Test
 	public void testDisplayWithBrightnessSensorDecorator() {
-		assertThatThrownBy(() -> new DisplayWithBrightnessSensorDecorator(null, component, saturation))
+		assertThatThrownBy(
+				() -> new DisplayWithBrightnessSensorDecorator(null, component, saturation))
       		.isInstanceOf(NullPointerException.class)
       		.hasMessage("Null sensor argument");
-		assertThatThrownBy(() -> new DisplayWithBrightnessSensorDecorator(brightnessSensor, null, saturation))
+		assertThatThrownBy(
+				() -> new DisplayWithBrightnessSensorDecorator(brightnessSensor, null, saturation))
            .isInstanceOf(NullPointerException.class)
            .hasMessage("Null component argument");
-		assertThatThrownBy(() -> new DisplayWithBrightnessSensorDecorator(brightnessSensor, component, Double.valueOf(-13)))
+		assertThatThrownBy(
+				() -> new DisplayWithBrightnessSensorDecorator(brightnessSensor, component, Double.valueOf(-13)))
 			.isInstanceOfAny(IllegalArgumentException.class)
 			.hasMessage("Negative saturation argument");
 		assertThat(new DisplayWithBrightnessSensorDecorator(brightnessSensor, component, null).getSaturationLuxAmount())

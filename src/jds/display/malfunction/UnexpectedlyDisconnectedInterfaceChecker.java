@@ -13,7 +13,8 @@ public final class UnexpectedlyDisconnectedInterfaceChecker extends MalfunctionC
 		if(display.getConnectedInterfaces().isEmpty())
 			return displayErrorAndReturnMessage(display, "No connected interface detected");
 		else if(display.getConnectedInterfaces()
-				.stream().allMatch(
+				.stream()
+				.allMatch(
 						connected -> !connected.equals(display.getSelectedInterface())))
 			return displayErrorAndReturnMessage(display, "Unexpectedly disconnected interface");
 		return super.checkMulfunction(display);

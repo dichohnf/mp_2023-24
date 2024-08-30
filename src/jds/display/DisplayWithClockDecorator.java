@@ -15,11 +15,11 @@ public final class DisplayWithClockDecorator extends DisplayWithSensorDecorator<
 
 	@Override
 	protected void setValue(LocalTime measure) {
-		if(measure.isBefore(LocalTime.of(07, 00)) 
-		|| measure.isAfter(LocalTime.of(22, 00)))
-			setColorTemperature(NIGHT_COLOR);
-		else
-			setColorTemperature(DAY_COLOR);
+		setColorTemperature(
+				(measure.isBefore(LocalTime.of(07, 00)) 
+				|| measure.isAfter(LocalTime.of(22, 00)))
+					?NIGHT_COLOR
+					: DAY_COLOR);
 	}
 
 }
