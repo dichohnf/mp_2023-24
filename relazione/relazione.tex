@@ -193,15 +193,15 @@
 	
 	\subsection{\texttt{VideoInterface}}
 	Nella classe \texttt{VideoInterface} è stato testato il corretto funzionamento dei metodi utilizzando le medesime tecniche utilizzate per le classi precedenti. In particolare sono stati testati i metodi \textit{equals($\cdot$)}, \textit{hashCode()} e \textit{toString()} secondo quanto atteso in letteratura (\textit{equals} risultante \textcolor{violet}{false} in caso di \texttt{other} assegnato a \textcolor{violet}{null}, \textit{hashCode} uguale per elementi uguali, eccetera).
-	\lstinputlisting[firstline=43, lastline=60, caption={Test del metodo \textit{equals(other)} per la classe \texttt{jds.display.interfaces.VideoInterface}.}, label=lst:test-videointerface-equals]{../tests/jds/display/interfaces/VideoInterfaceTest.java}
+	\lstinputlisting[firstline=46, lastline=63, caption={Test del metodo \textit{equals(other)} per la classe \texttt{jds.display.interfaces.VideoInterface}.}, label=lst:test-videointerface-equals]{../tests/jds/display/interfaces/VideoInterfaceTest.java}
 	
 	\subsection{\texttt{VideoStream} e gerarchia \texttt{VideoFrame}}
 	Una volta testata la classe \texttt{Position} con tecniche non dissimili da quelle precedentemente utilizzate, testando per ogni metodo che il risultato atteso sia coerente con quello ottenuto, si eseguono i test per \texttt{SimpleFrame}, ovvero si testa quel minimo di logica dei setters.\\
 	Si è testata successivamente la classe \texttt{ComposedFrame}, utilizzando la classe \texttt{MockFrameCompositor}. Dato che si tratta di un pattern \textbf{Composite} si testa che il metodo \textit{getData()}, operazione astratta della classe base, sia passata dal \textit{Composite} ai figli, e che quindi, in questo caso per come è stata implementata la classe \texttt{MockFrameCompositor}, che il risultato ottenuto contenga tutte le istanze dei dati dei figli.
-	\lstinputlisting[firstline=66, lastline=75, caption={Test del metodo \textit{getData()} per la classe \texttt{jds.display.videostream.ComposedFrame}.}, label=lst:test-composedframe-getdata]{../tests/jds/videostream/ComposedFrameTest.java}
+	\lstinputlisting[firstline=67, lastline=75, caption={Test del metodo \textit{getData()} per la classe \texttt{jds.display.videostream.ComposedFrame}.}, label=lst:test-composedframe-getdata]{../tests/jds/videostream/ComposedFrameTest.java}
 	
 	Infine è stata testata la classe \texttt{VideoStream} affinché fosse confermato che il metodo \textit{nextFrame()} restituisse sempre il corretto frame.
-	\lstinputlisting[firstline=53, lastline=64, caption={Test del metodo \textit{nextFrame()} per la classe \texttt{jds.display.videostream.VideoStream}.}, label=lst:test-videostream-nextframe]{/home/madict/eclipse-workspace-prove_mp/jds/videostream/VideoStreamTest.java}
+	\lstinputlisting[firstline=53, lastline=65, caption={Test del metodo \textit{nextFrame()} per la classe \texttt{jds.display.videostream.VideoStream}.}, label=lst:test-videostream-nextframe]{../tests/jds/videostream/VideoStreamTest.java}
 	
 \end{document}
 
