@@ -7,13 +7,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import jds.MockStreamReciver;
-import jds.StreamReciver;
+import jds.StreamReceiver;
 
 public class VideoInterfaceTest {
 
 	String name;
 	String version;
-	StreamReciver reciver;
+	StreamReceiver reciver;
 	VideoInterface inter;
 	
 	@Before
@@ -45,7 +45,7 @@ public class VideoInterfaceTest {
 	
 	@Test
 	public void testEquals() {
-		StreamReciver secondReciver	 = new MockStreamReciver();
+		StreamReceiver secondReciver	 = new MockStreamReciver();
 		VideoInterface equalInter	 = new VideoInterface(name, version, reciver);
 		VideoInterface diffName		 = new VideoInterface("HDMI", version, reciver);
 		VideoInterface diffVersion	 = new VideoInterface(name, "SXGA", reciver);
@@ -64,7 +64,7 @@ public class VideoInterfaceTest {
 	
 	@Test
 	public void testHashCode() {
-		StreamReciver secondReciver	 = new MockStreamReciver();
+		StreamReceiver secondReciver	 = new MockStreamReciver();
 		VideoInterface equalInter	 = new VideoInterface(name, version, reciver);
 		VideoInterface diffName		 = new VideoInterface("HDMI", version, reciver);
 		VideoInterface diffVersion	 = new VideoInterface(name, "SXGA", reciver);

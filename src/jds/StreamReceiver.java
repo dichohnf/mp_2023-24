@@ -2,7 +2,7 @@ package jds;
 
 import jds.videostream.VideoStream;
 
-public interface StreamReciver {
+public interface StreamReceiver {
 
 	VideoStream streamRecive();
 	
