@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import jds.MockStreamReciver;
 import jds.MockStreamSender;
-import jds.StreamReciver;
+import jds.StreamReceiver;
 import jds.StreamSender;
 import jds.display.Display;
 import jds.display.DisplaySetterToTestMalfunctions;
@@ -23,7 +23,7 @@ public class UnexpectedlyChangedResolutionCheckerTest {
 	List<String> supportedResolutions;
 	StreamSender displayChannel;
 	List<VideoInterface> supportedInterfaces;
-	StreamReciver interfaceChannel;
+	StreamReceiver interfaceChannel;
 	VideoInterface videoInterface;
 	Display display;
 	MalfunctionChecker checker1;

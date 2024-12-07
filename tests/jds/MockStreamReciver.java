@@ -7,7 +7,7 @@ import jds.videostream.MockFrameCompositor;
 import jds.videostream.VideoFrame;
 import jds.videostream.VideoStream;
 
-public class MockStreamReciver implements StreamReciver {
+public class MockStreamReciver implements StreamReceiver {
 
 	public VideoStream recivedStream;
 	

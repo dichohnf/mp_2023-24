@@ -13,7 +13,7 @@ import org.junit.Test;
 import jds.MockStreamReciver;
 import jds.MockStreamSender;
 import jds.Sensor;
-import jds.StreamReciver;
+import jds.StreamReceiver;
 import jds.StreamSender;
 import jds.display.interfaces.VideoInterface;
 import jds.display.malfunction.MalfunctionChecker;
@@ -26,7 +26,7 @@ public class DisplayWithClockDecoratorTest {
 	List<String> supportedResolutions;
 	StreamSender sender;
 	List<VideoInterface> supportedInterfaces;
-	StreamReciver reciver;
+	StreamReceiver reciver;
 	VideoInterface videoInterface;
 	Display component;
 	Sensor<Double> brightnessSensor;
